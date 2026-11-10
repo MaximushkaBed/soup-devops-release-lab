@@ -71,6 +71,7 @@ def test(artifact: Path) -> None:
         python = str(python_in(runtime))
         run([python, "-I", "-m", "pip", "install", "--no-index", "--no-deps", str(wheel)], work)
         run([python, "-I", "-m", "pip", "check"], work)
+        run([python, "-I", "-m", "pip", "uninstall", "--yes", "pip", "setuptools", "wheel"], work)
         run([python, "-I", str(ROOT / "tools/smoke.py")], work)
 
 

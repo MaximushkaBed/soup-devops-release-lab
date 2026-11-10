@@ -13,6 +13,11 @@ from pathlib import Path
 DIST = "soup-release-lab-maximushkabed"
 
 
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise ValueError(message)
+
+
 def identity() -> dict[str, str]:
     return {
         "commit": os.environ.get("GITHUB_SHA")
@@ -24,9 +29,9 @@ def identity() -> dict[str, str]:
 
 def distributions(bundle: Path) -> dict[str, str]:
     artifacts = sorted((bundle / "dist").iterdir())
-    assert len(artifacts) == 2, artifacts
-    assert sum(p.suffix == ".whl" for p in artifacts) == 1
-    assert sum(p.name.endswith(".tar.gz") for p in artifacts) == 1
+    require(len(artifacts) == 2, "Expected exactly two distributions")
+    require(sum(p.suffix == ".whl" for p in artifacts) == 1, "Expected one wheel")
+    require(sum(p.name.endswith(".tar.gz") for p in artifacts) == 1, "Expected one sdist")
     return {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in artifacts}
 
 
@@ -36,7 +41,7 @@ def metadata(bundle: Path) -> str:
         if artifact.suffix == ".whl":
             with zipfile.ZipFile(artifact) as archive:
                 members = [n for n in archive.namelist() if n.endswith(".dist-info/METADATA")]
-                assert len(members) == 1
+                require(len(members) == 1, "Expected one wheel metadata file")
                 raw = archive.read(members[0])
         else:
             with tarfile.open(artifact) as archive:
@@ -45,17 +50,20 @@ def metadata(bundle: Path) -> str:
                     for m in archive.getmembers()
                     if m.name.count("/") == 1 and m.name.endswith("/PKG-INFO")
                 ]
-                assert len(members) == 1
+                require(len(members) == 1, "Expected one sdist metadata file")
                 raw = archive.extractfile(members[0]).read()
         info = BytesParser().parsebytes(raw)
-        assert info["Name"] == DIST, info["Name"]
-        assert not info.get_all("Requires-Dist"), "Unexpected runtime dependency"
-        assert set(info["Requires-Python"].split(",")) == {">=3.10", "<3.15"}
+        require(info["Name"] == DIST, "Unexpected distribution name")
+        require(not info.get_all("Requires-Dist"), "Unexpected runtime dependency")
+        require(
+            set(info["Requires-Python"].split(",")) == {">=3.10", "<3.15"},
+            "Unexpected Python support range",
+        )
         versions.append(info["Version"])
-    assert len(set(versions)) == 1, versions
+    require(len(versions) == 2 and len(set(versions)) == 1, "Distribution versions differ")
     version = versions[0]
     if os.environ.get("GITHUB_REF_TYPE") == "tag":
-        assert os.environ["GITHUB_REF_NAME"] == f"v{version}", "Version/tag mismatch"
+        require(os.environ["GITHUB_REF_NAME"] == f"v{version}", "Version/tag mismatch")
     return version
 
 
@@ -64,12 +72,13 @@ def main() -> None:
     parser.add_argument("action", choices=("record", "verify"))
     parser.add_argument("bundle", type=Path)
     args = parser.parse_args()
-    current = {**identity(), "version": metadata(args.bundle), "sha256": distributions(args.bundle)}
+    hashes = distributions(args.bundle)
+    current = {**identity(), "version": metadata(args.bundle), "sha256": hashes}
     manifest = args.bundle / "manifest.json"
     if args.action == "record":
         manifest.write_text(json.dumps(current, indent=2) + "\n", encoding="utf-8")
     else:
-        assert json.loads(manifest.read_text()) == current, "Stale or modified artifact"
+        require(json.loads(manifest.read_text()) == current, "Stale or modified artifact")
     print(json.dumps(current, indent=2))
 
 

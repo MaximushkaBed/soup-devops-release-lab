@@ -14,6 +14,8 @@ DIST = "soup-release-lab-maximushkabed"
 def main() -> None:
     import soup_release_lab
 
+    assert sys.flags.isolated, "Smoke test must run with Python -I"
+    assert {dist.metadata["Name"] for dist in importlib.metadata.distributions()} == {DIST}
     installed = Path(soup_release_lab.__file__).resolve()
     assert installed.is_relative_to(Path(sys.prefix).resolve()), installed
     assert importlib.metadata.version(DIST) == soup_release_lab.__version__ == "0.9.3"

@@ -30,12 +30,15 @@ def main() -> None:
                 raise
             time.sleep(5)
     published = {item["filename"]: item for item in metadata["urls"]}
-    assert set(published) == set(manifest["sha256"]), "Index has unexpected or missing files"
+    if set(published) != set(manifest["sha256"]):
+        raise ValueError("Index has unexpected or missing files")
     for filename, digest in manifest["sha256"].items():
         item = published[filename]
-        assert item["digests"]["sha256"] == digest, f"Published digest mismatch: {filename}"
+        if item["digests"]["sha256"] != digest:
+            raise ValueError(f"Published digest mismatch: {filename}")
         with urllib.request.urlopen(item["url"], timeout=30) as response:
-            assert hashlib.sha256(response.read()).hexdigest() == digest, filename
+            if hashlib.sha256(response.read()).hexdigest() != digest:
+                raise ValueError(f"Published bytes mismatch: {filename}")
     with tempfile.TemporaryDirectory(prefix="soup-index-") as tmp:
         work = Path(tmp)
         runtime = work / "runtime"
@@ -65,6 +68,13 @@ def main() -> None:
             cwd=work,
             env=env,
             timeout=180,
+        )
+        subprocess.run(
+            [str(python), "-I", "-m", "pip", "uninstall", "--yes", "pip", "setuptools", "wheel"],
+            check=True,
+            cwd=work,
+            env=env,
+            timeout=60,
         )
         subprocess.run(
             [str(python), "-I", str(ROOT / "tools/smoke.py")],

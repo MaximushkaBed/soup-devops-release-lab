@@ -1,9 +1,5 @@
-.git
-.venv
-**/__pycache__
-.pytest_cache
-.ruff_cache
-build
-dist
-bundle
-.evidence
+**
+!Dockerfile
+!bundle/
+!bundle/dist/
+!bundle/dist/*.whl
