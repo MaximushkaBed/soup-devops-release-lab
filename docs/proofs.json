@@ -1,0 +1,67 @@
+{
+  "repository": "https://github.com/MaximushkaBed/soup-devops-release-lab",
+  "commit": "7fee1977f2b876e7705d4f98c1826dadda126897",
+  "fixed": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598",
+  "publish": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990",
+  "package": "https://test.pypi.org/project/soup-release-lab-maximushkabed/0.9.3/",
+  "incidents": {
+    "python310": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768813463",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205",
+      "error": "ImportError: cannot import name 'UTC' from 'datetime' (/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/datetime.py)",
+      "failed_jobs": [
+        "artifact-tests (windows-2022, 3.10)",
+        "artifact-tests (ubuntu-24.04, 3.10)"
+      ]
+    },
+    "windows": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768825741",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630",
+      "error": "ModuleNotFoundError: No module named 'pwd'",
+      "failed_jobs": [
+        "artifact-tests (windows-2022, 3.12)",
+        "artifact-tests (windows-2022, 3.14)",
+        "artifact-tests (windows-2022, 3.11)",
+        "artifact-tests (windows-2022, 3.13)",
+        "artifact-tests (windows-2022, 3.10)"
+      ]
+    },
+    "missing-data": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768836351",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516",
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\RUNNER~1\\\\AppData\\\\Local\\\\Temp\\\\soup-artifact-qkc26yrc\\\\runtime\\\\Lib\\\\site-packages\\\\soup_release_lab\\\\greeting.txt'",
+      "failed_jobs": [
+        "docker",
+        "artifact-tests (ubuntu-24.04, 3.12)",
+        "artifact-tests (ubuntu-24.04, 3.13)",
+        "artifact-tests (ubuntu-24.04, 3.11)",
+        "artifact-tests (ubuntu-24.04, 3.10)",
+        "artifact-tests (ubuntu-24.04, 3.14)",
+        "artifact-tests (windows-2022, 3.10)",
+        "artifact-tests (windows-2022, 3.11)",
+        "artifact-tests (windows-2022, 3.13)",
+        "artifact-tests (windows-2022, 3.12)",
+        "artifact-tests (windows-2022, 3.14)"
+      ]
+    },
+    "entrypoint": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768847957",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743",
+      "error": "ImportError: cannot import name 'missing_main' from 'soup_release_lab.cli' (/tmp/soup-artifact-_th0naog/runtime/lib/python3.13/site-packages/soup_release_lab/cli.py)",
+      "failed_jobs": [
+        "docker",
+        "artifact-tests (ubuntu-24.04, 3.14)",
+        "artifact-tests (ubuntu-24.04, 3.11)",
+        "artifact-tests (windows-2022, 3.10)",
+        "artifact-tests (windows-2022, 3.13)",
+        "artifact-tests (windows-2022, 3.11)",
+        "artifact-tests (windows-2022, 3.14)",
+        "artifact-tests (ubuntu-24.04, 3.10)",
+        "artifact-tests (windows-2022, 3.12)",
+        "artifact-tests (ubuntu-24.04, 3.12)",
+        "artifact-tests (ubuntu-24.04, 3.13)"
+      ]
+    }
+  },
+  "personal_verification": "The applicant configured the TestPyPI Trusted Publisher and independently created a fresh local venv, installed version 0.9.3 from TestPyPI, and ran the installed CLI. The observed JSON contained Hello, Soup! and version 0.9.3. The broader matrix and negative tests were automated; no manual review of every Actions log is claimed."
+}

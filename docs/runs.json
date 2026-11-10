@@ -1,0 +1,1624 @@
+[
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:29:34Z",
+    "databaseId": 42768853743,
+    "displayTitle": "Release checks / entrypoint",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671684213",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794148",
+        "failed_steps": [
+          "Run docker run --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges soup-release:ci --name Soup --json"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794206",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794219",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794231",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794246",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794270",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794275",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794282",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794374",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794408",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129671794484",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129672623769",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768853743/job/129672623789",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:29:31Z",
+    "databaseId": 42768847957,
+    "displayTitle": "Naive / entrypoint",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768847957",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768847957/job/129671669096",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:29:27Z",
+    "databaseId": 42768840516,
+    "displayTitle": "Release checks / missing-data",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671646432",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671747955",
+        "failed_steps": [
+          "Run docker run --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges soup-release:ci --name Soup --json"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748072",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748098",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748105",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748106",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748127",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748130",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748141",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748174",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748198",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129671748411",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129672449788",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768840516/job/129672451357",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:29:25Z",
+    "databaseId": 42768836351,
+    "displayTitle": "Naive / missing-data",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768836351",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768836351/job/129671629866",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:29:21Z",
+    "databaseId": 42768830630,
+    "displayTitle": "Release checks / windows",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671616556",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752201",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752387",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752442",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752450",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752453",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752459",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752485",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752493",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752525",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752526",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129671752571",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129672582789",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768830630/job/129672584104",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:29:18Z",
+    "databaseId": 42768825741,
+    "displayTitle": "Naive / windows",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768825741",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768825741/job/129671600054",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:29:15Z",
+    "databaseId": 42768819205,
+    "displayTitle": "Release checks / python310",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671577573",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688158",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688233",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688237",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688240",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688275",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688279",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688281",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688321",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688338",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688351",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129671688365",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129672288065",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768819205/job/129672289248",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:29:11Z",
+    "databaseId": 42768813463,
+    "displayTitle": "Naive / python310",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768813463",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768813463/job/129671560709",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:28:54Z",
+    "databaseId": 42768783598,
+    "displayTitle": "Release checks / main",
+    "headSha": "7fee1977f2b876e7705d4f98c1826dadda126897",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671455285",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545844",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545929",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545935",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545954",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545967",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545970",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545975",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671545985",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671546020",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671546021",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129671546051",
+        "failed_steps": []
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129672023073",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768783598/job/129672023163",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:28:18Z",
+    "databaseId": 42768719990,
+    "displayTitle": "Release checks / v0.9.3",
+    "headSha": "c4ad4a17318cf24032f9675ee96ee32522ead4d2",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671242864",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333678",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333731",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333770",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333772",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333793",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333848",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333891",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333922",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671333995",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671334017",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671334020",
+        "failed_steps": []
+      },
+      {
+        "name": "publish",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129671897143",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768719990/job/129672096472",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:27:14Z",
+    "databaseId": 42768602891,
+    "displayTitle": "Release checks / main",
+    "headSha": "c4ad4a17318cf24032f9675ee96ee32522ead4d2",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670865844",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983335",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983417",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983465",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983477",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983495",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983501",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983516",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983536",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983537",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983581",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129670983582",
+        "failed_steps": []
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129671406202",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768602891/job/129671406389",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:24:45Z",
+    "databaseId": 42768327674,
+    "displayTitle": "Release checks / entrypoint",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129669989801",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153653",
+        "failed_steps": [
+          "Run docker run --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges soup-release:ci --name Soup --json"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153796",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153861",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153866",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153878",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153884",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153893",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153937",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670153984",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670154017",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670154087",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670945998",
+        "failed_steps": []
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768327674/job/129670946210",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:24:39Z",
+    "databaseId": 42768317765,
+    "displayTitle": "Naive / entrypoint",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768317765",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768317765/job/129669957580",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:24:37Z",
+    "databaseId": 42768313706,
+    "displayTitle": "Release checks / missing-data",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129669942245",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670051977",
+        "failed_steps": [
+          "Run docker run --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges soup-release:ci --name Soup --json"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670051983",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052004",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052028",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052038",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052040",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052054",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052072",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052075",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052084",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670052097",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670785880",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768313706/job/129670786036",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:24:35Z",
+    "databaseId": 42768309241,
+    "displayTitle": "Naive / missing-data",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768309241",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768309241/job/129669927647",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:24:32Z",
+    "databaseId": 42768305053,
+    "displayTitle": "Release checks / windows",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129669914098",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019570",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019636",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019645",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019668",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019670",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019683",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019684",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019708",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019724",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019732",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670019758",
+        "failed_steps": []
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670539818",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768305053/job/129670540120",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:24:30Z",
+    "databaseId": 42768301209,
+    "displayTitle": "Naive / windows",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768301209",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768301209/job/129669899615",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-11-10T06:24:27Z",
+    "databaseId": 42768297080,
+    "displayTitle": "Release checks / python310",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669883671",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965126",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965319",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965327",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965336",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965359",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965377",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965378",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965385",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965388",
+        "failed_steps": [
+          "Wheel in clean runtime",
+          "Sdist rebuilt separately, then installed in clean runtime"
+        ]
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965398",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129669965423",
+        "failed_steps": []
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129670503872",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768297080/job/129670504394",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:24:24Z",
+    "databaseId": 42768291458,
+    "displayTitle": "Naive / python310",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768291458",
+    "jobs": [
+      {
+        "name": "source-tests",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768291458/job/129669869234",
+        "failed_steps": []
+      }
+    ]
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-11-10T06:24:20Z",
+    "databaseId": 42768282579,
+    "displayTitle": "Release checks / main",
+    "headSha": "0cc1adcfd2bd2132ca86d5bb62713187da392199",
+    "status": "completed",
+    "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669833704",
+        "failed_steps": []
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927176",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927295",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.14)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927314",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927317",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927320",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.11)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927329",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.13)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927349",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927350",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (windows-2022, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927356",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.12)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927405",
+        "failed_steps": []
+      },
+      {
+        "name": "artifact-tests (ubuntu-24.04, 3.10)",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129669927421",
+        "failed_steps": []
+      },
+      {
+        "name": "publish",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129670496519",
+        "failed_steps": []
+      },
+      {
+        "name": "verify-index",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42768282579/job/129670496556",
+        "failed_steps": []
+      }
+    ]
+  }
+]
