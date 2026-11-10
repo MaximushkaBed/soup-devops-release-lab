@@ -24,11 +24,14 @@ def main() -> None:
     )
     result = subprocess.run(
         [str(executable), "--name", "Soup", "--json"],
-        check=True,
         capture_output=True,
         text=True,
         timeout=30,
     )
+    if result.returncode:
+        print(result.stdout, end="", flush=True)
+        print(result.stderr, end="", file=sys.stderr, flush=True)
+        result.check_returncode()
     data = json.loads(result.stdout)
     assert data["greeting"] == "Hello, Soup!", data
     assert data["version"] == "0.9.3" and data["user"], data
