@@ -1,0 +1,4 @@
+-r build.in
+pytest==8.4.2
+ruff==0.14.3
+twine==6.2.0

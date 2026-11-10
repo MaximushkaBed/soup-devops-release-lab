@@ -1,0 +1,39 @@
+name: Naive CI
+run-name: "Naive / ${{ inputs.fault }}"
+on:
+  workflow_dispatch:
+    inputs:
+      fault:
+        description: Deliberate incident
+        type: choice
+        default: fixed
+        options: [fixed, python310, windows, missing-data, entrypoint]
+permissions:
+  contents: read
+jobs:
+  source-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --no-cache-dir --require-hashes --only-binary=:all: -r requirements/ci.txt
+      - name: Reproduce the incident
+        env:
+          FAULT: ${{ inputs.fault }}
+        run: |
+          python tools/inject_bug.py "$FAULT"
+          git diff -- src pyproject.toml
+      - run: python -m pytest -q tests/unit
+      - run: python -m build --no-isolation --outdir dist
+      - run: python -m twine check --strict dist/*
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: naive-${{ inputs.fault }}-${{ github.run_id }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
