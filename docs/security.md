@@ -40,8 +40,8 @@ protected main/tags and required review before any real PyPI use. OIDC removes s
 it does not make arbitrary repository code trustworthy. Attestations establish origin, not safety.
 
 The JSON/hash check after upload can detect an incident only **after** users can fetch that release.
-A green check cannot guarantee rollback. Contrary to the scenario's shorthand, PyPI supports yanking
-and deletion, but neither reliably recalls installed or mirrored files; do not depend on deletion.
+A green check cannot guarantee rollback. PyPI yanking cannot reliably recall installed or mirrored files;
+a published file cannot be overwritten with different bytes.
 Yank the bad release, notify users, and publish a new version rather than overwriting 0.9.3.
 
 ## First ten minutes of an incident

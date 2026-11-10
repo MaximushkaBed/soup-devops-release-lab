@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     tags: ['v*']
+    paths-ignore: ['docs/**']
   pull_request:
   workflow_dispatch:
     inputs:
@@ -96,6 +97,7 @@ jobs:
         with:
           name: dist-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: bundle
+      - run: python3 tools/provenance.py verify bundle
       - run: docker build --network=none -t soup-release:ci .
       - run: docker run --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges soup-release:ci --name Soup --json
   publish:
