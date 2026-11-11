@@ -1,0 +1,3 @@
+# Historical lower-bound profile, used only in the isolated compatibility fixture.
+httpx==0.27.2
+tenacity==8.5.0

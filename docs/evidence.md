@@ -1,5 +1,8 @@
 # Evidence ledger
 
+This ledger records the original published baseline. The later validation work and dependency
+experiments are recorded separately in [iteration-2.md](iteration-2.md).
+
 Repository: https://github.com/MaximushkaBed/soup-devops-release-lab (private).
 Actions links require repository access; invite reviewers before submission or include exported logs.
 No failed run is deleted, hidden, or changed to success. All conclusions below were collected from the GitHub API.

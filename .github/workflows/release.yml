@@ -144,4 +144,5 @@ jobs:
         with:
           name: dist-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: bundle
+      - run: python tools/provenance.py verify bundle
       - run: python tools/verify_index.py bundle
