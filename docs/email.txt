@@ -3,12 +3,12 @@ Hi Soup Team,
 Please find my DevOps Engineer take-home submission:
 
 Repository: https://github.com/MaximushkaBed/soup-devops-release-lab
-Actions evidence (four naive green / hardened red comparisons, plus corrected green runs):
-https://github.com/MaximushkaBed/soup-devops-release-lab/blob/main/docs/evidence.md
+Latest Actions evidence (six demonstrated failures and corrected green matrices):
+https://github.com/MaximushkaBed/soup-devops-release-lab/blob/main/docs/iteration-2.md
 Published package: https://test.pypi.org/project/soup-release-lab-maximushkabed/0.9.3/
 
-Attached: submission.pdf (two-page note) and soup-devops-submission.zip (source, Git history
-and exported logs for the ten primary Actions runs). The repository is private; please share
+Attached: submission.pdf (two-page note) and soup-devops-improved-submission.zip (source, Git history
+and exported raw Actions/local evidence, including unexpected failures). The repository is private; please share
 GitHub usernames for reviewer access. The archive allows source and log review immediately.
 
 The most surprising result was that valid metadata, a successful build and passing source
@@ -20,6 +20,8 @@ I used Codex to help design, implement, document and run automated checks. I per
 configured TestPyPI's Trusted Publisher, installed the published package in a fresh virtual
 environment, and verified the CLI output. The detailed disclosure distinguishes my checks
 from AI-assisted checks and records corrections made during review in docs/ai-usage.md.
+My personal installation check applies to the published 0.9.3 baseline; the follow-up HTTPX/Tenacity
+experiments and Windows/Python/library matrices were executed through Codex and GitHub Actions.
 All failed Actions runs have been retained. GPU CI is a design and cost estimate; no paid
 GPU resources were rented. The pipeline publishes automatically to TestPyPI via OIDC; the
 note explains why I would not yet authorize unattended publication to real PyPI.

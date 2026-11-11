@@ -49,7 +49,7 @@ enabled. The initial run is retained and is not counted as proof of a dependency
 
 ## Boundaries
 
-Local Linux / CPython 3.13.9 validation passed 65 regression/unit tests, both installed artifacts
+Local Linux / CPython 3.13.9 validation passed 66 regression/unit tests, both installed artifacts
 with normal and optimized smoke checks, all six dependency comparisons, actionlint, Ruff, strict
 metadata checks and Docker. Full logs and hashes are under the timestamped `.evidence/preflight-*`
 directory; GitHub runs below must be inspected separately before claiming cross-platform success.
@@ -63,3 +63,18 @@ exists, but it cannot substitute for protected workflow and maintainer access.
 No new TestPyPI upload, production PyPI publication, paid GPU lease or employer email is part of
 these follow-up checks. The earlier applicant's personal installation verification applies to
 published 0.9.3 only. All new verification is AI-assisted until independently checked by the applicant.
+
+## Verified remote results
+
+[Fixed release matrix, ten OS/Python combinations](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972551690) and [fixed dependency matrix, eight combinations](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972551692) are green at `80d3de365cb0819065df51b11720ebc07237e8bd`.
+
+- **python310**: [naive green](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972041217) / [hardened red](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972045975). Expected error: `ImportError: cannot import name 'UTC'`. Confirmed separately in all 2 failed-job logs; pair/fixture commit `6f9e1c4`.
+- **windows**: [naive green](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972050314) / [hardened red](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972054409). Expected error: `ModuleNotFoundError: No module named 'pwd'`. Confirmed separately in all 5 failed-job logs; pair/fixture commit `6f9e1c4`.
+- **missing-data**: [naive green](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972058969) / [hardened red](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972064123). Expected error: `FileNotFoundError:`. Confirmed separately in all 11 failed-job logs; pair/fixture commit `6f9e1c4`.
+- **entrypoint**: [naive green](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972069720) / [hardened red](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972074373). Expected error: `ImportError: cannot import name 'missing_main'`. Confirmed separately in all 11 failed-job logs; pair/fixture commit `6f9e1c4`.
+- **removed-api**: [naive green](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972673465/job/130364641243) / [hardened red](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972673465). Expected error: `unexpected keyword argument 'proxies'`. Confirmed separately in all 4 failed-job logs; pair/fixture commit `80d3de3`.
+- **undeclared-runtime**: [naive green](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972678006/job/130364668279) / [hardened red](https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972678006). Expected error: `ModuleNotFoundError: No module named 'tenacity'`. Confirmed separately in all 8 failed-job logs; pair/fixture commit `80d3de3`.
+
+The initial dependency runs 42971946086, 42972175181 and 42972179805 included Windows lock-byte mismatches. They are retained but excluded from the six primary demonstrations. All 16 follow-up run records and raw ZIP logs were exported; no failure was deleted or changed to success.
+
+The updated index verifier also checked the already-published baseline against its original release bundle: both published file hashes and a fresh TestPyPI installation passed on Linux / CPython 3.13.9. This was an AI-assisted read-only verification, not a new publication.

@@ -97,9 +97,9 @@ leave broken combinations red; there is no publication job. See [iteration detai
 
 See [incident details](docs/incidents.md), [security and limits](docs/security.md),
 [GPU design](docs/gpu-ci.md), [evidence](docs/evidence.md), and [AI disclosure](docs/ai-usage.md).
-The baseline submission note is `docs/submission.pdf` (two pages). Historical evidence and the
-submission describe the published baseline; local improvements require fresh CI evidence before
-claiming the updated candidate is release-ready.
+The submission note is `docs/submission.pdf` (two pages). It distinguishes the published baseline
+from the follow-up validation. Fresh matrix results and all six demonstrated failures are in
+[iteration-2.md](docs/iteration-2.md); the original evidence remains available separately.
 
 ## Releases
 

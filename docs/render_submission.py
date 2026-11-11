@@ -22,6 +22,8 @@ class TwoPageDocument(SimpleDocTemplate):
 
 def render() -> None:
     proof = json.loads((ROOT / "proofs.json").read_text())
+    followup_path = ROOT / "iteration-2-evidence.json"
+    followup = json.loads(followup_path.read_text()) if followup_path.exists() else {}
     styles = getSampleStyleSheet()
     styles.add(
         ParagraphStyle(
@@ -78,7 +80,7 @@ def render() -> None:
         ),
     }
     for fault, (title, detail) in descriptions.items():
-        item = proof["incidents"][fault]
+        item = followup.get("incidents", proof["incidents"])[fault]
         p(
             f"<b>{title}.</b> {detail} "
             + link(item["naive"], "Naive: GREEN")
@@ -97,10 +99,12 @@ def render() -> None:
         "8.5.0/9.1.2. An old development environment hides both a removed HTTPX API and an "
         "undeclared Tenacity dependency. Clean installations reproduce TypeError and "
         "ModuleNotFoundError, respectively; even pip check misses the undeclared import. "
-        "The fixed wheel passes both local profiles. A separate workflow covers Windows/Ubuntu, "
-        "Python 3.10/3.14 and both profiles. "
+        "The fixed wheel passes both local profiles and all eight Windows/Ubuntu, "
+        "Python 3.10/3.14 and library-profile combinations. "
         + link(
-            proof["repository"] + "/blob/strengthen-release-validation/docs/iteration-2.md",
+            followup.get(
+                "dependencies_fixed", proof["repository"] + "/blob/main/docs/iteration-2.md"
+            ),
             "Follow-up evidence",
         )
         + "."
@@ -110,7 +114,7 @@ def render() -> None:
         "One hash-locked build creates wheel and sdist. Ten OS/Python jobs test installed wheels "
         "and independently rebuilt sdists in fresh runtimes without source or bootstrap tools. "
         "Docker tests the same wheel non-root, offline and read-only. "
-        + link(proof["fixed"], "Baseline corrected matrix: GREEN")
+        + link(followup.get("fixed", proof["fixed"]), "Corrected matrix: GREEN")
         + "."
     )
     p(
