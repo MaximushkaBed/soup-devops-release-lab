@@ -27,7 +27,7 @@ soup_release_lab = ["greeting.txt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 
 [tool.ruff]
 target-version = "py310"

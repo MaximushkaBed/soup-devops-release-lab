@@ -23,6 +23,17 @@ setuptools in a runtime venv; the smoke environments now remove pip/setuptools/w
 that the candidate is the only installed distribution. These are documented AI-assisted fixes,
 separate from the applicant checks below.
 
+## Follow-up AI-assisted checks
+
+Follow-up on 2026-11-11: Codex added a separate HTTPX/Tenacity compatibility fixture, two hashed
+dependency profiles, six local comparisons and an eight-combination Actions workflow. Codex also
+reproduced an optimization-sensitive false positive, strengthened metadata and registry checks,
+and added a logged local preflight. The original applicant checks below were not repeated by the
+applicant for this follow-up. One local experiment initially failed for lack of disk space; its
+log was retained and POSIX venv creation was corrected to avoid copying large Python binaries.
+The installed DevOps skills supplied workflow guidance; their assertions were checked against
+code and actual output. Claude Code and subagents were not used.
+
 ## Applicant's independent checks
 
 The applicant personally configured the Pending Trusted Publisher on TestPyPI with the repository,

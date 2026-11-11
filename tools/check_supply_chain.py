@@ -11,22 +11,31 @@ from pathlib import Path
 SCRIPT = Path(__file__).with_name("provenance.py").resolve()
 
 
+def verify_command(bundle: Path) -> list[str]:
+    flags = ["-O"] if sys.flags.optimize else []
+    return [sys.executable, *flags, str(SCRIPT), "verify", str(bundle)]
+
+
 def rejected(bundle: Path, expected: str, extra_env: dict[str, str] | None = None) -> None:
     env = {**os.environ, **(extra_env or {})}
     result = subprocess.run(
-        [sys.executable, str(SCRIPT), "verify", str(bundle)],
+        verify_command(bundle),
         env=env,
         capture_output=True,
         text=True,
         timeout=30,
     )
-    assert result.returncode != 0, "Guard accepted an invalid bundle"
-    assert expected in result.stderr, result.stderr
+    if result.returncode == 0:
+        raise ValueError("Guard accepted an invalid bundle")
+    if expected not in result.stderr:
+        raise ValueError(f"Expected rejection {expected!r}; received:\n{result.stderr}")
     print(f"PASS: rejected {expected}")
 
 
 def main() -> None:
     source = Path(sys.argv[1]).resolve()
+    # A broken guard that rejects everything must not pass negative experiments.
+    subprocess.run(verify_command(source), check=True, timeout=30)
     with tempfile.TemporaryDirectory(prefix="soup-guards-") as tmp:
         root = Path(tmp)
         for scenario in ("tamper", "stale", "tag"):

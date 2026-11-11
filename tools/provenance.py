@@ -30,9 +30,19 @@ def identity() -> dict[str, str]:
 def distributions(bundle: Path) -> dict[str, str]:
     artifacts = sorted((bundle / "dist").iterdir())
     require(len(artifacts) == 2, "Expected exactly two distributions")
+    require(
+        all(p.is_file() and not p.is_symlink() for p in artifacts),
+        "Expected regular artifact files",
+    )
     require(sum(p.suffix == ".whl" for p in artifacts) == 1, "Expected one wheel")
     require(sum(p.name.endswith(".tar.gz") for p in artifacts) == 1, "Expected one sdist")
     return {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in artifacts}
+
+
+def single_header(info, name: str) -> str:
+    values = info.get_all(name, [])
+    require(len(values) == 1 and bool(values[0].strip()), f"Expected one nonempty {name} header")
+    return values[0].strip()
 
 
 def metadata(bundle: Path) -> str:
@@ -51,15 +61,16 @@ def metadata(bundle: Path) -> str:
                     if m.name.count("/") == 1 and m.name.endswith("/PKG-INFO")
                 ]
                 require(len(members) == 1, "Expected one sdist metadata file")
+                require(members[0].isfile(), "Expected regular sdist metadata file")
                 raw = archive.extractfile(members[0]).read()
         info = BytesParser().parsebytes(raw)
-        require(info["Name"] == DIST, "Unexpected distribution name")
+        require(single_header(info, "Name") == DIST, "Unexpected distribution name")
         require(not info.get_all("Requires-Dist"), "Unexpected runtime dependency")
         require(
-            set(info["Requires-Python"].split(",")) == {">=3.10", "<3.15"},
+            set(single_header(info, "Requires-Python").split(",")) == {">=3.10", "<3.15"},
             "Unexpected Python support range",
         )
-        versions.append(info["Version"])
+        versions.append(single_header(info, "Version"))
     require(len(versions) == 2 and len(set(versions)) == 1, "Distribution versions differ")
     version = versions[0]
     if os.environ.get("GITHUB_REF_TYPE") == "tag":
@@ -78,7 +89,10 @@ def main() -> None:
     if args.action == "record":
         manifest.write_text(json.dumps(current, indent=2) + "\n", encoding="utf-8")
     else:
-        require(json.loads(manifest.read_text()) == current, "Stale or modified artifact")
+        require(
+            json.loads(manifest.read_text(encoding="utf-8")) == current,
+            "Stale or modified artifact",
+        )
     print(json.dumps(current, indent=2))
 
 

@@ -1,0 +1,215 @@
+{
+  "repository": "https://github.com/MaximushkaBed/soup-devops-release-lab",
+  "branch": "strengthen-release-validation",
+  "fixed": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972551690",
+  "dependencies_fixed": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972551692",
+  "code_commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+  "dependency_commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+  "incidents": {
+    "python310": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972041217",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972045975",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "expected_error": "ImportError: cannot import name 'UTC'",
+      "failed_jobs": [
+        "artifact-tests (windows-2022, 3.10)",
+        "artifact-tests (ubuntu-24.04, 3.10)"
+      ]
+    },
+    "windows": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972050314",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972054409",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "expected_error": "ModuleNotFoundError: No module named 'pwd'",
+      "failed_jobs": [
+        "artifact-tests (windows-2022, 3.14)",
+        "artifact-tests (windows-2022, 3.12)",
+        "artifact-tests (windows-2022, 3.11)",
+        "artifact-tests (windows-2022, 3.10)",
+        "artifact-tests (windows-2022, 3.13)"
+      ]
+    },
+    "missing-data": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972058969",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972064123",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "expected_error": "FileNotFoundError:",
+      "failed_jobs": [
+        "docker",
+        "artifact-tests (ubuntu-24.04, 3.12)",
+        "artifact-tests (windows-2022, 3.11)",
+        "artifact-tests (ubuntu-24.04, 3.11)",
+        "artifact-tests (windows-2022, 3.10)",
+        "artifact-tests (ubuntu-24.04, 3.10)",
+        "artifact-tests (windows-2022, 3.14)",
+        "artifact-tests (windows-2022, 3.12)",
+        "artifact-tests (ubuntu-24.04, 3.14)",
+        "artifact-tests (ubuntu-24.04, 3.13)",
+        "artifact-tests (windows-2022, 3.13)"
+      ]
+    },
+    "entrypoint": {
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972069720",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972074373",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "expected_error": "ImportError: cannot import name 'missing_main'",
+      "failed_jobs": [
+        "artifact-tests (windows-2022, 3.14)",
+        "artifact-tests (ubuntu-24.04, 3.11)",
+        "artifact-tests (windows-2022, 3.10)",
+        "docker",
+        "artifact-tests (ubuntu-24.04, 3.12)",
+        "artifact-tests (ubuntu-24.04, 3.10)",
+        "artifact-tests (windows-2022, 3.13)",
+        "artifact-tests (windows-2022, 3.11)",
+        "artifact-tests (windows-2022, 3.12)",
+        "artifact-tests (ubuntu-24.04, 3.14)",
+        "artifact-tests (ubuntu-24.04, 3.13)"
+      ]
+    },
+    "removed-api": {
+      "workflow": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972673465",
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972673465/job/130364641243",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972673465",
+      "commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+      "expected_error": "unexpected keyword argument 'proxies'",
+      "failed_jobs": [
+        "clean (windows-2022, 3.10, current)",
+        "clean (ubuntu-24.04, 3.14, current)",
+        "clean (windows-2022, 3.14, current)",
+        "clean (ubuntu-24.04, 3.10, current)"
+      ]
+    },
+    "undeclared-runtime": {
+      "workflow": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972678006",
+      "naive": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972678006/job/130364668279",
+      "hardened": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972678006",
+      "commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+      "expected_error": "ModuleNotFoundError: No module named 'tenacity'",
+      "failed_jobs": [
+        "clean (windows-2022, 3.10, minimum)",
+        "clean (ubuntu-24.04, 3.14, minimum)",
+        "clean (windows-2022, 3.14, current)",
+        "clean (windows-2022, 3.10, current)",
+        "clean (windows-2022, 3.14, minimum)",
+        "clean (ubuntu-24.04, 3.10, minimum)",
+        "clean (ubuntu-24.04, 3.14, current)",
+        "clean (ubuntu-24.04, 3.10, current)"
+      ]
+    }
+  },
+  "history": [
+    {
+      "id": 42972678006,
+      "title": "Dependencies / undeclared-runtime / strengthen-release-validation",
+      "commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972678006",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972673465,
+      "title": "Dependencies / removed-api / strengthen-release-validation",
+      "commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972673465",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972551690,
+      "title": "Release checks / 1/merge",
+      "commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972551690",
+      "conclusion": "success"
+    },
+    {
+      "id": 42972551692,
+      "title": "Dependencies / fixed / 1/merge",
+      "commit": "80d3de365cb0819065df51b11720ebc07237e8bd",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972551692",
+      "conclusion": "success"
+    },
+    {
+      "id": 42972179805,
+      "title": "Dependencies / undeclared-runtime / strengthen-release-validation",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972179805",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972175181,
+      "title": "Dependencies / removed-api / strengthen-release-validation",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972175181",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972074373,
+      "title": "Release checks / entrypoint",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972074373",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972069720,
+      "title": "Naive / entrypoint",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972069720",
+      "conclusion": "success"
+    },
+    {
+      "id": 42972064123,
+      "title": "Release checks / missing-data",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972064123",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972058969,
+      "title": "Naive / missing-data",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972058969",
+      "conclusion": "success"
+    },
+    {
+      "id": 42972054409,
+      "title": "Release checks / windows",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972054409",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972050314,
+      "title": "Naive / windows",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972050314",
+      "conclusion": "success"
+    },
+    {
+      "id": 42972045975,
+      "title": "Release checks / python310",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972045975",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42972041217,
+      "title": "Naive / python310",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42972041217",
+      "conclusion": "success"
+    },
+    {
+      "id": 42971946086,
+      "title": "Dependencies / fixed / 1/merge",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42971946086",
+      "conclusion": "failure"
+    },
+    {
+      "id": 42971946025,
+      "title": "Release checks / 1/merge",
+      "commit": "6f9e1c4103bab6495418b683be9b01061e7981e5",
+      "url": "https://github.com/MaximushkaBed/soup-devops-release-lab/actions/runs/42971946025",
+      "conclusion": "success"
+    }
+  ]
+}

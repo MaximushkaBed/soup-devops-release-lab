@@ -1,5 +1,6 @@
 """Render the two-page submission from verified Actions evidence (needs reportlab)."""
 
+import io
 import json
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -13,8 +14,16 @@ from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer
 ROOT = Path(__file__).resolve().parent
 
 
+class TwoPageDocument(SimpleDocTemplate):
+    def afterPage(self):
+        if self.page > 2:
+            raise ValueError("Submission exceeds the two-page limit")
+
+
 def render() -> None:
     proof = json.loads((ROOT / "proofs.json").read_text())
+    followup_path = ROOT / "iteration-2-evidence.json"
+    followup = json.loads(followup_path.read_text()) if followup_path.exists() else {}
     styles = getSampleStyleSheet()
     styles.add(
         ParagraphStyle(
@@ -36,7 +45,7 @@ def render() -> None:
         return f'<a color="#075985" href="{escape(url)}">{escape(label)}</a>'
 
     p("Soup DevOps release pipeline", "Heading1")
-    p("Maksim | 10 November 2026 | Evidence and verdict")
+    p("Maksim | 11 November 2026 | Evidence and verdict")
     p(
         "A green source test is insufficient: the distribution must work after installation. "
         "This repository builds a dependency-free greeting CLI, deliberately breaks four "
@@ -71,7 +80,7 @@ def render() -> None:
         ),
     }
     for fault, (title, detail) in descriptions.items():
-        item = proof["incidents"][fault]
+        item = followup.get("incidents", proof["incidents"])[fault]
         p(
             f"<b>{title}.</b> {detail} "
             + link(item["naive"], "Naive: GREEN")
@@ -80,24 +89,38 @@ def render() -> None:
             + "."
         )
     p(
-        "The injector prints an exact diff against a clean checkout; the same commit is used "
-        "for each pair. Naive CI tests source on Linux 3.12, builds, and checks metadata. "
-        "The hardened path exercises the installed console command, not just importability. "
-        "All original failed runs remain available in docs/evidence.md."
+        "Each pair uses one commit and a logged fault patch. Naive CI tests Linux 3.12 source; "
+        "hardened CI executes the installed command. Original failed runs remain visible."
+    )
+    p("Real dependency compatibility", "Heading2")
+    p(
+        "A separate HTTP client fixture adds HTTPX and Tenacity, with offline response validation "
+        "and bounded retries. Two hash-locked profiles cover HTTPX 0.27.2/0.28.1 and Tenacity "
+        "8.5.0/9.1.2. An old development environment hides both a removed HTTPX API and an "
+        "undeclared Tenacity dependency. Clean installations reproduce TypeError and "
+        "ModuleNotFoundError, respectively; even pip check misses the undeclared import. "
+        "The fixed wheel passes both local profiles and all eight Windows/Ubuntu, "
+        "Python 3.10/3.14 and library-profile combinations. "
+        + link(
+            followup.get(
+                "dependencies_fixed", proof["repository"] + "/blob/main/docs/iteration-2.md"
+            ),
+            "Follow-up evidence",
+        )
+        + "."
     )
     p("What the corrected pipeline verifies", "Heading2")
     p(
-        "Lint and unit tests precede one wheel/sdist build using hash-locked tools. The wheel is "
-        "built from the sdist. Ten OS/Python jobs install the wheel and independently rebuild the "
-        "sdist in a builder, then test it in another clean runtime. Runtimes exclude the checkout "
-        "and bootstrap packages. Docker installs the same wheel and runs non-root, offline and "
-        "read-only. " + link(proof["fixed"], "Corrected matrix: GREEN") + "."
+        "One hash-locked build creates wheel and sdist. Ten OS/Python jobs test installed wheels "
+        "and independently rebuilt sdists in fresh runtimes without source or bootstrap tools. "
+        "Docker tests the same wheel non-root, offline and read-only. "
+        + link(followup.get("fixed", proof["fixed"]), "Corrected matrix: GREEN")
+        + "."
     )
     p(
-        "On a matching tag reachable from main, only the publisher receives OIDC permission in "
-        "the tag-restricted testpypi environment. It uploads the tested bytes without rebuilding. "
-        "A final job checks both file hashes served by TestPyPI and performs a fresh, "
-        "hash-checked index installation. "
+        "Only a matching tag on main can publish, through OIDC in the tag-restricted environment. "
+        "The tested bytes are uploaded without rebuilding, then verified by hash and fresh "
+        "TestPyPI installation. "
         + link(proof["publish"], "Release and index check: GREEN")
         + "; "
         + link(proof["package"], "TestPyPI 0.9.3")
@@ -108,7 +131,7 @@ def render() -> None:
     p("Trust boundaries, costs and limitations", "Heading1")
     p("Silent failures addressed", "Heading2")
     p(
-        "<b>Dependencies:</b> no runtime dependencies; unexpected Requires-Dist is rejected. "
+        "<b>Published CLI:</b> no runtime dependencies; unexpected Requires-Dist is rejected. "
         "Build tools and transitive requirements use exact versions and hashes; Actions and the "
         "Docker base use immutable references. These choices reduce moving inputs, but hashes "
         "cannot establish that a selected dependency is benign."
@@ -147,7 +170,9 @@ def render() -> None:
         "Automatic TestPyPI publication is demonstrated. Before real PyPI, protect main "
         "and release "
         "tags, require review of workflow/lock changes, and add tests for the actual application's "
-        "contracts. Green does not prove absence of malicious code, vulnerable pinned tools or "
+        "contracts. GitHub currently returns HTTP 403 for private-repository protection on this "
+        "account plan; this remains an explicit blocker. Green does not prove absence of "
+        "malicious code, vulnerable pinned tools or "
         "account compromise. macOS, ARM, PyPy and unusual user environments are untested. "
         "Post-publication verification can detect failure only after upload. Yank a bad release "
         "and publish a new version; this cannot recall existing installations or mirrored files."
@@ -165,7 +190,10 @@ def render() -> None:
         "Review corrected "
         "YAML quoting, Docker context exclusions, hidden bootstrap dependencies, "
         "optimization-sensitive "
-        "assertions and initially suppressed CLI stderr. " + proof["personal_verification"]
+        "assertions and initially suppressed CLI stderr. "
+        + proof["personal_verification"]
+        + " Follow-up dependency and regression checks were executed by Codex; no new personal "
+        "verification or new publication is claimed."
     )
 
     def footer(canvas, doc):
@@ -177,8 +205,9 @@ def render() -> None:
         canvas.drawRightString(A4[0] - 40, 23, f"{doc.page}/2")
 
     target = ROOT / "submission.pdf"
-    doc = SimpleDocTemplate(
-        str(target),
+    output = io.BytesIO()
+    doc = TwoPageDocument(
+        output,
         pagesize=A4,
         leftMargin=40,
         rightMargin=40,
@@ -189,6 +218,9 @@ def render() -> None:
     )
     story.append(Spacer(1, 1))
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
+    if doc.page != 2:
+        raise ValueError(f"Expected two pages, rendered {doc.page}")
+    target.write_bytes(output.getvalue())
     print(target)
 
 
