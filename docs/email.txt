@@ -3,28 +3,34 @@ Hi Soup Team,
 Please find my DevOps Engineer take-home submission:
 
 Repository: https://github.com/MaximushkaBed/soup-devops-release-lab
-Latest Actions evidence (six demonstrated failures and corrected green matrices):
-https://github.com/MaximushkaBed/soup-devops-release-lab/blob/main/docs/iteration-2.md
-Published package: https://test.pypi.org/project/soup-release-lab-maximushkabed/0.9.3/
+Current release and training checks:
+https://github.com/MaximushkaBed/soup-devops-release-lab/actions/workflows/release.yml
+Training contracts and reproduction commands:
+https://github.com/MaximushkaBed/soup-devops-release-lab/blob/main/docs/training-contracts.md
+Published baseline: https://test.pypi.org/project/soup-release-lab-maximushkabed/0.9.3/
 
-Attached: submission.pdf (two-page note) and soup-devops-improved-submission.zip (source, Git history
-and exported raw Actions/local evidence, including unexpected failures). The repository is private; please share
-GitHub usernames for reviewer access. The archive allows source and log review immediately.
+Attached: submission.pdf (two pages) and soup-devops-improved-submission.zip, containing source,
+Git history, checksums and exported raw Actions/local evidence. The repository is private;
+reviewers can use the archive immediately or share GitHub usernames for access.
 
-The most surprising result was that valid metadata, a successful build and passing source
-tests all coexisted with an unusable installed command. Even importing the package would miss
-the broken entry point. My remaining concern is the workflow's trust boundary: a compromised
-maintainer can change both code and checks, then tag a malicious release.
+The original four incidents demonstrate why source tests cannot validate a release. To make
+this relevant to Soup's post-training work, I added an independently written LoRA/SwiGLU fixture
+that checks derivatives and two optimizer steps, with two pinned PyTorch/Triton stacks. Four
+training faults pass naive forward tests but fail installed-wheel and rebuilt-sdist contracts
+for precise expected causes. This fixture illustrates a release-gate pattern; it does not
+claim to test Soup's production kernels or full training dependency stack.
 
-I used Codex to help design, implement, document and run automated checks. I personally
-configured TestPyPI's Trusted Publisher, installed the published package in a fresh virtual
-environment, and verified the CLI output. The detailed disclosure distinguishes my checks
-from AI-assisted checks and records corrections made during review in docs/ai-usage.md.
-My personal installation check applies to the published 0.9.3 baseline; the follow-up HTTPX/Tenacity
-experiments and Windows/Python/library matrices were executed through Codex and GitHub Actions.
-All failed Actions runs have been retained. GPU CI is a design and cost estimate; no paid
-GPU resources were rented. The pipeline publishes automatically to TestPyPI via OIDC; the
-note explains why I would not yet authorize unattended publication to real PyPI.
+The most surprising result was that a correct forward pass can coexist with broken training.
+Zero-initialized LoRA B also makes a zero first-step A gradient an easy false alarm. My remaining
+concern is the workflow's trust boundary: a compromised maintainer can change code and checks.
+
+Codex assisted with implementation, documentation and automated verification. I independently
+configured TestPyPI's Trusted Publisher, installed the published 0.9.3 baseline in a fresh venv,
+and verified the CLI output. The new training checks were AI-assisted, as disclosed in
+docs/ai-usage.md. No native GPU execution or performance improvement is claimed: the actual
+Triton interpreter runs on CPU, and the CUDA probe explicitly fails without a real GPU.
+No paid GPU was rented. The GPU cost controls remain a design. The note explains the remaining
+private-repository protection blocker before unattended real PyPI publication.
 
 Best,
 Maksim

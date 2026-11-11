@@ -4,6 +4,11 @@ A dependency-free Python CLI and a release pipeline that tests the **installed a
 Supported targets: CPython 3.10–3.14 on Ubuntu and Windows x64. This is an internship exercise,
 not a production publisher. The only configured index is TestPyPI.
 
+The follow-up [training fixture](docs/training-contracts.md) exercises LoRA gradients, optimizer
+updates and Triton SwiGLU on two pinned PyTorch/Triton stacks. It is independently packaged,
+supports Python 3.11–3.13, and leaves the published 0.9.3 baseline unchanged. CPU interpretation
+is explicitly distinguished from native GPU execution.
+
 ```sh
 python3 -m venv .venv
 . .venv/bin/activate
@@ -38,7 +43,10 @@ python tools/preflight.py
 This checks workflow syntax (without optional ShellCheck), Ruff, all tests, a fresh build, strict
 metadata, provenance, and negative guards with normal and optimized Python. It then tests both
 installed artifacts, builds Docker using the actual Dockerfile and ignore rules, and validates the
-container's CLI output. It also runs the six real dependency comparisons described below.
+container's CLI output. It also runs installed CPU/Triton-interpreter training contracts and
+17 controlled training comparisons. Its disposable ML profile downloads roughly 0.5 GB and
+needs about 2 GB of temporary disk space. Reuse a verified existing profile with
+`--ml-runtime .evidence/ml-environments/floor`; its dependency inventory is checked before each test.
 Docker uses an isolated configuration directory, a temporary container and a temporary image tag;
 both are removed even after a failed smoke test. Builder network access is needed for hashed tools;
 application execution uses local deterministic data. No release is published by preflight.
@@ -50,6 +58,28 @@ out have their process trees terminated. Source hashes are checked again at comp
 changed candidate cannot receive a passing report. Missing actionlint
 or Docker is an error. `--skip-docker` explicitly produces a `partial` report, never `passed`.
 These local checks cover the current OS/Python only; the remote ten-target matrix remains required.
+The complete ML preflight requires Linux x86_64 and Python 3.11–3.13. The greeting package's
+separate artifact tester covers its other targets. Native GPU validation remains unexecuted.
+
+## Training contracts for Soup
+
+After installing the locked CI tools above, run from the repository root:
+
+```sh
+python tools/ml_lab.py build fixed .evidence/training-bundle
+python tools/ml_lab.py bare .evidence/training-bundle --report .evidence/training-bare.json
+python tools/ml_lab.py provision floor .evidence/ml-environments/floor
+python tools/ml_lab.py test .evidence/training-bundle .evidence/ml-environments/floor --backend cpu --report .evidence/training-cpu.json
+python tools/ml_lab.py test .evidence/training-bundle .evidence/ml-environments/floor --backend interpreter --artifact sdist --report .evidence/training-interpreter.json
+python tools/ml_lab.py experiment .evidence/training-experiments .evidence/ml-environments/floor
+```
+
+Use new build/profile/experiment directories for independent runs. For the other stack, provision
+`modern` into another directory. The reusable **Training contracts** workflow is required by
+**Release checks**: Linux Python 3.11/3.12/3.13 × two stacks, plus Windows Python 3.12 × two stacks.
+Each tests the installed wheel and rebuilt sdist; Linux also executes real Triton interpretation
+in FP32. A separate two-OS job verifies help/version without ML dependencies. Failed reports and
+original fault logs are uploaded. See [contracts and limits](docs/training-contracts.md).
 
 Pipeline regression tests live in `tests/pipeline/`; the deliberately naive workflow continues
 to run only `tests/unit/`. Negative tests require the expected cause of rejection, including with
@@ -91,7 +121,7 @@ Two additional incidents must pass in the old, pre-populated development environ
 
 Each local comparison preserves the actual failing exit code and diagnostic in separate logs and
 `results.json`; the comparison succeeds only when the expected specific failure was observed.
-The **Dependency compatibility** workflow also runs the same wheel on Ubuntu/Windows,
+The dispatch-only historical **Dependency compatibility** workflow runs the same wheel on Ubuntu/Windows,
 Python 3.10/3.14, and both dependency profiles (eight combinations). Its dispatch fault modes
 leave broken combinations red; there is no publication job. See [iteration details](docs/iteration-2.md).
 

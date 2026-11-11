@@ -1,0 +1,9 @@
+# CPU interpreter dependencies; torch wheels are pinned separately to the official CPU index.
+filelock==3.20.0
+typing-extensions==4.15.0
+networkx==3.4.2
+jinja2==3.1.6
+fsspec==2025.10.0
+sympy==1.13.1
+setuptools==80.9.0
+numpy==2.2.6

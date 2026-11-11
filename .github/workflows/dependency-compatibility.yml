@@ -1,11 +1,6 @@
 name: Dependency compatibility
 run-name: "Dependencies / ${{ inputs.fault || 'fixed' }} / ${{ github.ref_name }}"
 on:
-  push:
-    branches: [main]
-    paths: ['fixtures/**', 'tools/dependency_lab.py', 'requirements/compat-*', '.github/workflows/dependency-compatibility.yml']
-  pull_request:
-    paths: ['fixtures/**', 'tools/dependency_lab.py', 'requirements/compat-*', '.github/workflows/dependency-compatibility.yml']
   workflow_dispatch:
     inputs:
       fault:

@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "operation": "swiglu",
+  "block_size": 256,
+  "tolerances": {
+    "float64": {"atol": 1e-9, "rtol": 1e-7},
+    "float32": {"atol": 2e-5, "rtol": 2e-4},
+    "float16": {"atol": 0.002, "rtol": 0.01},
+    "bfloat16": {"atol": 0.03, "rtol": 0.05}
+  }
+}

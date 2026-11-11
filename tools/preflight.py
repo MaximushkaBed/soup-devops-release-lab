@@ -173,6 +173,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--actionlint", default="actionlint", help="Path to the actionlint binary")
     parser.add_argument("--skip-docker", action="store_true", help="Produce a partial report")
+    parser.add_argument("--ml-runtime", type=Path, help="Reuse a verified CPU ML profile directory")
     args = parser.parse_args()
     evidence = ROOT / ".evidence"
     evidence.mkdir(exist_ok=True)
@@ -215,16 +216,72 @@ def main() -> int:
             recorder.step(name, [python, *flags, "tools/check_supply_chain.py", str(bundle)])
         for pattern, name in (("*.whl", "wheel"), ("*.tar.gz", "sdist")):
             recorder.step(name, [python, "tools/test_artifact.py", str(bundle / "dist" / pattern)])
-        recorder.step(
-            "dependency-experiments",
-            [
-                python,
-                "tools/dependency_lab.py",
-                "experiment",
-                str(directory / "dependency-experiments"),
-            ],
-            timeout=1200,
-        )
+        with tempfile.TemporaryDirectory(prefix="soup-preflight-ml-") as ml_temporary:
+            runtime = (
+                args.ml_runtime.resolve() if args.ml_runtime else Path(ml_temporary) / "profile"
+            )
+            if not args.ml_runtime:
+                recorder.step(
+                    "ml-profile",
+                    [python, "tools/ml_lab.py", "provision", "floor", str(runtime)],
+                    timeout=900,
+                )
+            shutil.copy2(runtime / "profile.json", directory / "ml-profile.json")
+            ml_bundle = directory / "training-bundle"
+            recorder.step("ml-build", [python, "tools/ml_lab.py", "build", "fixed", str(ml_bundle)])
+            recorder.step(
+                "ml-bare",
+                [
+                    python,
+                    "tools/ml_lab.py",
+                    "bare",
+                    str(ml_bundle),
+                    "--report",
+                    str(directory / "ml-bare.json"),
+                ],
+            )
+            for backend in ("cpu", "interpreter"):
+                for artifact in ("wheel", "sdist"):
+                    name = f"ml-{backend}-{artifact}"
+                    recorder.step(
+                        name,
+                        [
+                            python,
+                            "tools/ml_lab.py",
+                            "test",
+                            str(ml_bundle),
+                            str(runtime),
+                            "--backend",
+                            backend,
+                            "--artifact",
+                            artifact,
+                            "--report",
+                            str(directory / f"{name}.json"),
+                        ],
+                    )
+            recorder.step(
+                "ml-gpu-guard",
+                [
+                    python,
+                    "tools/ml_lab.py",
+                    "gpu-guard",
+                    str(runtime),
+                    "--report",
+                    str(directory / "ml-gpu-unavailable.json"),
+                ],
+            )
+            recorder.step(
+                "ml-fault-experiments",
+                [
+                    python,
+                    "tools/ml_lab.py",
+                    "experiment",
+                    str(directory / "ml-experiments"),
+                    str(runtime),
+                ],
+                timeout=1200,
+            )
+            recorder.summary["native_gpu"] = "not-run; CPU/interpreter evidence only"
         if args.skip_docker:
             recorder.summary["skipped"].append("docker")
         else:

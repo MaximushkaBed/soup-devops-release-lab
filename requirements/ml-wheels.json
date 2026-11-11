@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "profiles": {
+    "floor": {
+      "torch": "2.6.0+cpu",
+      "triton": "3.2.0",
+      "torch_metadata_sha256": "05d5e2f9aec5224a4e8e6d661125da8159b11e4a301cd5c0658ff8c5b7842b80",
+      "torch_requires_dist": [
+        "filelock",
+        "typing-extensions (>=4.10.0)",
+        "networkx",
+        "jinja2",
+        "fsspec",
+        "setuptools ; python_version >= \"3.12\"",
+        "sympy (==1.13.1) ; python_version >= \"3.9\"",
+        "opt-einsum (>=3.3) ; extra == 'opt-einsum'",
+        "optree (>=0.13.0) ; extra == 'optree'"
+      ],
+      "torch_wheels": {
+        "3.11-linux": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp311-cp311-linux_x86_64.whl",
+          "sha256": "5b6ae523bfb67088a17ca7734d131548a2e60346c622621e4248ed09dd0790cc"
+        },
+        "3.11-win32": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp311-cp311-win_amd64.whl",
+          "sha256": "24c9d3d13b9ea769dd7bd5c11cfa1fc463fd7391397156565484565ca685d908"
+        },
+        "3.12-linux": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp312-cp312-linux_x86_64.whl",
+          "sha256": "59e78aa0c690f70734e42670036d6b541930b8eabbaa18d94e090abf14cc4d91"
+        },
+        "3.12-win32": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp312-cp312-win_amd64.whl",
+          "sha256": "4027d982eb2781c93825ab9527f17fbbb12dbabf422298e4b954be60016f87d8"
+        },
+        "3.13-linux": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp313-cp313-linux_x86_64.whl",
+          "sha256": "e70ee2e37ad27a90201d101a41c2e10df7cf15a9ebd17c084f54cf2518c57bdf"
+        },
+        "3.13-win32": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp313-cp313-win_amd64.whl",
+          "sha256": "b436a6c62d086dc5b32f5721b59f0ca8ad3bf9de09ee9b5b83dbf1e7a7e22c60"
+        }
+      },
+      "triton_wheels": {
+        "3.11-linux": {
+          "url": "https://files.pythonhosted.org/packages/a7/2e/757d2280d4fefe7d33af7615124e7e298ae7b8e3bc4446cdb8e88b0f9bab/triton-3.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "sha256": "8009a1fb093ee8546495e96731336a33fb8856a38e45bb4ab6affd6dbc3ba220"
+        },
+        "3.12-linux": {
+          "url": "https://files.pythonhosted.org/packages/06/00/59500052cb1cf8cf5316be93598946bc451f14072c6ff256904428eaf03c/triton-3.2.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "sha256": "8d9b215efc1c26fa7eefb9a157915c92d52e000d2bf83e5f69704047e63f125c"
+        },
+        "3.13-linux": {
+          "url": "https://files.pythonhosted.org/packages/c7/30/37a3384d1e2e9320331baca41e835e90a3767303642c7a80d4510152cbcf/triton-3.2.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "sha256": "e5dfa23ba84541d7c0a531dfce76d8bcd19159d50a4a8b14ad01e91734a5c1b0"
+        }
+      }
+    },
+    "modern": {
+      "torch": "2.14.0+cpu",
+      "triton": "3.8.0",
+      "torch_metadata_sha256": "6e6cbfdc8067a91fe9fa5068191574caef6d04c743da805707b849396a8834f6",
+      "torch_requires_dist": [
+        "filelock",
+        "typing-extensions>=4.10.0",
+        "setuptools>=77.0.3",
+        "sympy>=1.13.3",
+        "networkx>=2.5.1",
+        "jinja2",
+        "fsspec>=0.8.5",
+        "optree>=0.13.0; extra == \"optree\"",
+        "opt-einsum>=3.3; extra == \"opt-einsum\"",
+        "pyyaml; extra == \"pyyaml\""
+      ],
+      "torch_wheels": {
+        "3.11-linux": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl",
+          "sha256": "673dbf5c9bbadfffab7a386b6dd7a0c219f1408a328b7b4e86d0ae551cdafa42"
+        },
+        "3.11-win32": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp311-cp311-win_amd64.whl",
+          "sha256": "8e2c47c6556c7d5a85848634372bb2252907d411e9cad669c99406856d536eb5"
+        },
+        "3.12-linux": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+          "sha256": "a09987c95ec4cffdb6df798d3d641558110a334cfccce22f2f046d83142bc260"
+        },
+        "3.12-win32": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp312-cp312-win_amd64.whl",
+          "sha256": "738cd9237bf63443a5e5f9652e5115f7b0510b089636a43d4011e9fccede714f"
+        },
+        "3.13-linux": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl",
+          "sha256": "160e1bc46aeded3111d2801f8ae10dc9a1b946843a7e126b4dbf5e19c5706e95"
+        },
+        "3.13-win32": {
+          "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp313-cp313-win_amd64.whl",
+          "sha256": "f2ffdacd95d7090a8bdfa8426f5d1557625874b19a96ba23a41f640d4a0c9c28"
+        }
+      },
+      "triton_wheels": {
+        "3.11-linux": {
+          "url": "https://files.pythonhosted.org/packages/6f/9a/2c3d3823726d5ad5359f7065b02b984925158b74611c1e3987f6a37461fb/triton-3.8.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "sha256": "68988ac85d5e7086baeda0ddc175af9667db7529b3c5e11a5c0601b8bef2200a"
+        },
+        "3.12-linux": {
+          "url": "https://files.pythonhosted.org/packages/c1/09/b7012e5bfae67640f268aa584caa80fe1674f6b0da949046b679972c33e3/triton-3.8.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "sha256": "e91ffa46d095b252248297292dd22bcbacd53a125a0c2eefbbbf74925a320bc3"
+        },
+        "3.13-linux": {
+          "url": "https://files.pythonhosted.org/packages/b0/b6/3394d5548404c1cabd1dadadd28d0b3f9478db1dff8180da53bb3f0a1e19/triton-3.8.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "sha256": "1f0497218e26b7d79773ad9c2a3fa3b539ee69f587a13fac2e552b1d322a8015"
+        }
+      }
+    }
+  }
+}

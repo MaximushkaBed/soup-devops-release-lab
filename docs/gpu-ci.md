@@ -1,13 +1,15 @@
-# GPU CI design (planned, not executed)
+# Native GPU CI design (not executed)
 
-The current CLI is CPU-only. Buying GPU time to test its greeting would add no useful coverage.
-This design is for a later GPU-backed feature; it is not a claim that GPU tests passed.
+The greeting CLI is CPU-only. The separate [training fixture](training-contracts.md) implements
+a native CUDA SwiGLU/LoRA probe alongside CPU and Triton-interpreter contracts. Interpretation
+cannot validate compiled GPU kernels. No native GPU test was executed; this design describes
+the remaining provisioning and budget controls.
 
 ## When and what
 
 For every release: CPU lint, source tests, artifact matrix and image checks pass first; then a
 20-minute GPU budget tests the exact candidate artifact plus the supported CUDA/driver combination.
-Check `nvidia-smi`, device discovery, a small deterministic GPU calculation against a CPU reference,
+Check `nvidia-smi`, device discovery, installed `soup-training-probe --backend cuda`,
 OOM/error handling, and actual application behavior. Record GPU model, driver, CUDA, image digest,
 artifact SHA and results. Gate publication on its success once GPU support is advertised.
 

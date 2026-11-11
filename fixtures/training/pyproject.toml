@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "soup-training-contract-lab"
+version = "0.1.0"
+description = "Installed-artifact LoRA gradient and Triton SwiGLU release contracts"
+requires-python = ">=3.11,<3.14"
+readme = "README.md"
+dependencies = []
+
+[project.optional-dependencies]
+train = ["torch>=2.6,<2.15", "numpy>=2,<3"]
+kernels = ["soup-training-contract-lab[train]", "triton>=3.2,<3.9; sys_platform == 'linux'"]
+
+[project.scripts]
+soup-training-probe = "soup_training_probe.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+soup_training_probe = ["kernel-contract.json"]
