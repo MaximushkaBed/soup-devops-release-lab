@@ -106,7 +106,11 @@ def build(fault: str, bundle: Path) -> None:
     print(json.dumps(manifest, indent=2), flush=True)
 
 
-def test(bundle: Path, profile: str, naive: bool) -> None:
+def test(bundle: Path, profile: str, naive: bool, report: Path | None = None) -> None:
+    if profile == "fresh" and naive:
+        raise ValueError("Fresh dependencies require the clean installed-artifact test")
+    if report is not None and (report.exists() or report.is_symlink()):
+        raise ValueError(f"Use a new report path; refusing stale output: {report}")
     manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
     mismatches = [key for key, value in identity().items() if manifest.get(key) != value]
     if mismatches:
@@ -118,49 +122,86 @@ def test(bundle: Path, profile: str, naive: bool) -> None:
     if actual != manifest["sha256"]:
         raise ValueError("Dependency fixture bundle was altered")
     wheel = next((bundle / "dist").glob("*.whl"))
-    lock = ROOT / f"requirements/compat-{profile}.txt"
     with tempfile.TemporaryDirectory(prefix="soup-dependency-test-") as temporary:
         work = Path(temporary)
         downloader, runtime = work / "downloader", work / "runtime"
-        venv.create(downloader, with_pip=True, symlinks=os.name != "nt")
         wheelhouse = work / "wheelhouse"
-        run(
-            [
-                python_in(downloader),
-                "-I",
-                "-m",
-                "pip",
-                "download",
-                "--require-hashes",
-                "--only-binary=:all:",
-                "--dest",
-                str(wheelhouse),
-                "-r",
-                str(lock),
-            ],
-            work,
-        )
+        lock = ROOT / f"requirements/compat-{profile}.txt"
+        if profile != "fresh":
+            venv.create(downloader, with_pip=True, symlinks=os.name != "nt")
+            run(
+                [
+                    python_in(downloader),
+                    "-I",
+                    "-m",
+                    "pip",
+                    "download",
+                    "--require-hashes",
+                    "--only-binary=:all:",
+                    "--dest",
+                    str(wheelhouse),
+                    "-r",
+                    str(lock),
+                ],
+                work,
+            )
         venv.create(runtime, with_pip=True, symlinks=os.name != "nt")
         python = python_in(runtime)
         pip = [python, "-I", "-m", "pip"]
         offline = ["--no-index", "--find-links", str(wheelhouse)]
-        if naive:
+        if profile == "fresh":
+            # Intentionally floating, inside the wheel's declared support ranges.
+            # One explicit index; no user configuration, cache or editable checkout.
+            run(
+                [
+                    *pip,
+                    "install",
+                    "--index-url",
+                    "https://pypi.org/simple",
+                    "--only-binary=:all:",
+                    str(wheel),
+                ],
+                work,
+            )
+        elif naive:
             # Development tooling has already installed all dependencies, declared or not.
             run([*pip, "install", *offline, "--require-hashes", "-r", str(lock)], work)
             run([*pip, "install", "--no-deps", "--no-index", str(wheel)], work)
         else:
             # Resolve only what the wheel actually declares, from the hash-verified wheelhouse.
             run([*pip, "install", *offline, "--only-binary=:all:", str(wheel)], work)
-            run([*pip, "check"], work)
+        run([*pip, "check"], work)
+        inventory = json.loads(run([*pip, "list", "--format=json"], work, capture=True))
+        if not naive:
             run([*pip, "uninstall", "--yes", "pip", "setuptools", "wheel"], work)
         executable = Path(python).with_name(
             "soup-http-probe.exe" if os.name == "nt" else "soup-http-probe"
         )
         output = run([str(executable), "--self-test"], work, capture=True)
         result = json.loads(output)
-        expected_httpx = "0.27.2" if profile == "minimum" else "0.28.1"
-        if result.get("status") != "passed" or result.get("httpx") != expected_httpx:
+        expected_httpx = {"minimum": "0.27.2", "current": "0.28.1"}.get(profile)
+        if result.get("status") != "passed" or (
+            expected_httpx is not None and result.get("httpx") != expected_httpx
+        ):
             raise ValueError(f"Unexpected fixture result: {result}")
+        if report is not None:
+            report.parent.mkdir(parents=True, exist_ok=True)
+            report.write_text(
+                json.dumps(
+                    {
+                        "status": "passed",
+                        "profile": profile,
+                        "python": sys.version,
+                        "platform": sys.platform,
+                        "manifest": manifest,
+                        "installed_before_removing_tools": inventory,
+                        "contracts": result,
+                    },
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
         print(
             f"PASS: {manifest['fault']}; {profile}; {'naive' if naive else 'clean'}; {sys.platform}"
         )
@@ -241,15 +282,18 @@ def main() -> None:
     builder.add_argument("bundle", type=Path)
     tester = subparsers.add_parser("test")
     tester.add_argument("bundle", type=Path)
-    tester.add_argument("--profile", choices=("minimum", "current"), required=True)
+    tester.add_argument("--profile", choices=("minimum", "current", "fresh"), required=True)
     tester.add_argument("--naive", action="store_true")
+    tester.add_argument(
+        "--report", type=Path, help="New JSON output path; written only after success"
+    )
     experiments = subparsers.add_parser("experiment")
     experiments.add_argument("directory", type=Path)
     args = parser.parse_args()
     if args.action == "build":
         build(args.fault, args.bundle.resolve())
     elif args.action == "test":
-        test(args.bundle.resolve(), args.profile, args.naive)
+        test(args.bundle.resolve(), args.profile, args.naive, args.report)
     else:
         experiment(args.directory.resolve())
 

@@ -44,7 +44,7 @@ def render():
         "A passing source test does not establish that an installed package works, or that its "
         "backward pass trains the intended weights. This exercise retains a published greeting CLI "
         "as the release baseline and adds an independently written LoRA/Triton fixture relevant to "
-        "Soup's post-training work. " + link(repo, "Private repository") + "."
+        "Soup's post-training work. " + link(repo, "Public repository") + "."
     )
     p("Original release failures, demonstrated in Actions", "Heading2")
     descriptions = {
@@ -101,9 +101,10 @@ def render():
         "checks: <b>PyTorch 2.6.0+cpu / "
         "Triton 3.2.0</b> and <b>PyTorch 2.14.0+cpu / Triton 3.8.0</b>. CPU checks include "
         "FP32/FP16/BF16, empty/strided inputs and irregular tails; interpretation is FP32 only. "
-        "Release CI gates on six Linux Python 3.11-3.13/stack combinations and two Windows Python "
+        "Independent training CI covers six Linux Python 3.11-3.13/stack combinations "
+        "and two Windows Python "
         "3.12/stack combinations, plus bare CLI checks without ML imports. "
-        + link(repo + "/actions/workflows/release.yml", "Current CI results")
+        + link(repo + "/actions/workflows/ml-contracts.yml", "Training CI results")
         + "; "
         + link(
             repo + "/blob/main/docs/training-contracts.md", "Contracts and reproducible commands"
@@ -117,8 +118,9 @@ def render():
         "<b>Artifact identity:</b> one build creates a wheel from sdist. Commit, run ID, attempt, "
         "distribution digests and profile hashes are bound in a manifest. Consumers verify it; "
         "sdists are also rebuilt independently. Installed probes run outside the checkout with "
-        "isolated, optimized Python. Changed dependencies or incomplete numerical reports fail. "
-        "No restored environment cache or editable source installation is used."
+        "isolated, optimized Python. RECORD hashes, allowed wheel files, source/resource bytes and "
+        "entry points are checked. Stale reports or incomplete numerical reports fail. No restored "
+        "environment cache or editable source installation is used."
     )
     p(
         "<b>Dependency provenance:</b> ML CPU wheels use reviewed official PyTorch URLs/SHA256s; "
@@ -126,14 +128,15 @@ def render():
         "installation, avoiding a mixed extra index and multi-GB CUDA downloads. Exact inventory "
         "and pip check verify the selected closure. Setuptools is "
         "explicit where Torch requires it. "
-        "Historical HTTPX/Tenacity API and undeclared-import experiments "
-        "remain available separately."
+        "Historical HTTPX/Tenacity experiments remain separate; a weekly/manual canary resolves "
+        "fresh supported dependencies and records their versions without updating release locks."
     )
     p(
         "<b>Privileges:</b> PR jobs are read-only, with pinned Actions and no persisted checkout "
         "credentials or publisher secrets. Only a matching tag on main "
         "can publish the tested bytes "
-        "through OIDC; the training workflow is now a required dependency. Registry verification "
+        "through OIDC after the success-only release-ready gate. ML tests run separately. "
+        "Registry verification "
         "checks served hashes and a clean install after publication. Corruption fails immediately; "
         "transient registry availability receives bounded retries."
     )
@@ -166,9 +169,10 @@ def render():
     p("Verdict and remaining concern", "Heading2")
     p(
         "TestPyPI publication is demonstrated; unattended real PyPI is "
-        "not authorized. Private-repo "
-        "branch/tag protection currently returns HTTP 403 on this account plan. Require protection "
-        "and review of workflow/lock changes first. This training fixture is not Soup's production "
+        "not authorized. The repository is public; required checks and branch/tag protection "
+        "still require separate configuration. Review workflow/lock changes before "
+        "real publishing. "
+        "This training fixture is not Soup's production "
         "code or full dependency stack; CUDA, macOS, ARM and unselected versions remain untested. "
         "Pinned hashes do not prove benign code. A compromised maintainer can change both code and "
         "checks; post-upload verification cannot recall installed or mirrored files. Yank a faulty "
@@ -180,7 +184,8 @@ def render():
         "zero-initialized LoRA B also makes first-step A gradients an "
         "easy false alarm. Codex drafted "
         "and executed the automation; local review corrected YAML quoting and strengthened the "
-        "independent oracle and evidence checks. Claude Code and subagents were not used. "
+        "independent oracle and evidence checks. Research subagents compared upstream release "
+        "workflows; Claude Code was not used. "
         + proof["personal_verification"]
         + " New training and compatibility checks were AI-assisted; "
         "no new applicant-independent verification or publication is claimed."

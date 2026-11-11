@@ -6,6 +6,7 @@ import os
 import subprocess
 import sys
 from datetime import datetime, timedelta
+from importlib.resources import files
 from pathlib import Path
 
 DIST = "soup-release-lab-maximushkabed"
@@ -58,6 +59,17 @@ def main() -> None:
     require(
         importlib.metadata.version(DIST) == soup_release_lab.__version__ == "0.9.3",
         "Installed distribution and module versions must both be 0.9.3",
+    )
+    entrypoints = importlib.metadata.distribution(DIST).entry_points
+    require(
+        [(ep.group, ep.name, ep.value) for ep in entrypoints]
+        == [("console_scripts", "soup-release", "soup_release_lab.cli:main")],
+        f"Unexpected installed entry points: {entrypoints}",
+    )
+    require(
+        files("soup_release_lab").joinpath("greeting.txt").read_text(encoding="utf-8")
+        == "Hello, {name}!\n",
+        "Installed greeting resource differs",
     )
     executable = Path(sys.executable).with_name(
         "soup-release.exe" if os.name == "nt" else "soup-release"

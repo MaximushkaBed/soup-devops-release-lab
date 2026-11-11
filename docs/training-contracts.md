@@ -60,7 +60,8 @@ One build produces a wheel from sdist and binds commit/run/attempt, profile hash
 and both distributions. Consumers verify this manifest. Sdist consumers also rebuild it in a
 separate locked builder. Installed probes run outside the checkout with `-I -O`; the reported
 module path must be inside the runtime. Reports retain backend, versions, cases, artifact identity
-and exit status. The training workflow gates the tag publisher; the fixture itself is not published.
+and exit status. The independent training workflow runs on changes to its inputs and on manual
+dispatch. It does not gate the unrelated greeting publisher; the fixture itself is not published.
 
 Refresh catalog inputs with `python tools/lock_ml_profiles.py`; regenerate each small dependency
 lock with `uv pip compile --universal --python-version 3.11 --generate-hashes --no-annotate

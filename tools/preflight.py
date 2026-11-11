@@ -17,6 +17,30 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def source_snapshot(root: Path, paths: str | None = None) -> dict[str, str]:
+    """Hash Git-visible files, including additions not yet tracked."""
+    if paths is None:
+        paths = subprocess.check_output(
+            ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+            cwd=root,
+            encoding="utf-8",
+            timeout=30,
+        )
+    return {
+        name: hashlib.sha256((root / name).read_bytes()).hexdigest()
+        for name in paths.split("\0")
+        if name and (root / name).is_file()
+    }
+
+
+def require_same_sources(before: dict[str, str], after: dict[str, str]) -> None:
+    changed = sorted(
+        name for name in before.keys() | after.keys() if before.get(name) != after.get(name)
+    )
+    if changed:
+        raise ValueError(f"Source changed during preflight; rerun this candidate: {changed}")
+
+
 def stop_process(process: subprocess.Popen) -> None:
     if os.name == "posix":
         try:
@@ -169,12 +193,86 @@ def check_docker(recorder: Recorder, bundle: Path) -> None:
                 )
 
 
+def check_ml(recorder: Recorder, runtime_path: Path | None) -> None:
+    python = sys.executable
+    directory = recorder.directory
+    with tempfile.TemporaryDirectory(prefix="soup-preflight-ml-") as ml_temporary:
+        runtime = runtime_path.resolve() if runtime_path else Path(ml_temporary) / "profile"
+        if not runtime_path:
+            recorder.step(
+                "ml-profile",
+                [python, "tools/ml_lab.py", "provision", "floor", str(runtime)],
+                timeout=900,
+            )
+        shutil.copy2(runtime / "profile.json", directory / "ml-profile.json")
+        ml_bundle = directory / "training-bundle"
+        recorder.step("ml-build", [python, "tools/ml_lab.py", "build", "fixed", str(ml_bundle)])
+        recorder.step(
+            "ml-bare",
+            [
+                python,
+                "tools/ml_lab.py",
+                "bare",
+                str(ml_bundle),
+                "--report",
+                str(directory / "ml-bare.json"),
+            ],
+        )
+        for backend in ("cpu", "interpreter"):
+            for artifact in ("wheel", "sdist"):
+                name = f"ml-{backend}-{artifact}"
+                recorder.step(
+                    name,
+                    [
+                        python,
+                        "tools/ml_lab.py",
+                        "test",
+                        str(ml_bundle),
+                        str(runtime),
+                        "--backend",
+                        backend,
+                        "--artifact",
+                        artifact,
+                        "--report",
+                        str(directory / f"{name}.json"),
+                    ],
+                )
+        recorder.step(
+            "ml-gpu-guard",
+            [
+                python,
+                "tools/ml_lab.py",
+                "gpu-guard",
+                str(runtime),
+                "--report",
+                str(directory / "ml-gpu-unavailable.json"),
+            ],
+        )
+        recorder.step(
+            "ml-fault-experiments",
+            [
+                python,
+                "tools/ml_lab.py",
+                "experiment",
+                str(directory / "ml-experiments"),
+                str(runtime),
+            ],
+            timeout=1200,
+        )
+        recorder.summary["native_gpu"] = "not-run; CPU/interpreter evidence only"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--actionlint", default="actionlint", help="Path to the actionlint binary")
     parser.add_argument("--skip-docker", action="store_true", help="Produce a partial report")
+    parser.add_argument(
+        "--with-ml", action="store_true", help="Also validate the separate ML fixture"
+    )
     parser.add_argument("--ml-runtime", type=Path, help="Reuse a verified CPU ML profile directory")
     args = parser.parse_args()
+    if args.ml_runtime and not args.with_ml:
+        parser.error("--ml-runtime requires --with-ml")
     evidence = ROOT / ".evidence"
     evidence.mkdir(exist_ok=True)
     prefix = "preflight-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ-")
@@ -190,11 +288,7 @@ def main() -> int:
         paths = recorder.step(
             "source-files", ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"]
         )
-        recorder.summary["source_sha256"] = {
-            name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
-            for name in paths.split("\0")
-            if name and (ROOT / name).is_file()
-        }
+        recorder.summary["source_sha256"] = source_snapshot(ROOT, paths)
         recorder.save()
         for path in (ROOT, Path(tempfile.gettempdir())):
             if shutil.disk_usage(path).free < 100 * 1024 * 1024:
@@ -210,90 +304,29 @@ def main() -> int:
         )
         artifacts = sorted(str(path) for path in (bundle / "dist").iterdir())
         recorder.step("metadata", [python, "-m", "twine", "check", "--strict", *artifacts])
+        recorder.step(
+            "wheel-contract",
+            [
+                python,
+                "tools/check_wheel.py",
+                *sorted(str(p) for p in (bundle / "dist").glob("*.whl")),
+            ],
+        )
         recorder.step("record", [python, "tools/provenance.py", "record", str(bundle)])
         recorder.step("verify", [python, "-O", "tools/provenance.py", "verify", str(bundle)])
         for flags, name in (([], "guards"), (["-O"], "optimized-guards")):
             recorder.step(name, [python, *flags, "tools/check_supply_chain.py", str(bundle)])
         for pattern, name in (("*.whl", "wheel"), ("*.tar.gz", "sdist")):
             recorder.step(name, [python, "tools/test_artifact.py", str(bundle / "dist" / pattern)])
-        with tempfile.TemporaryDirectory(prefix="soup-preflight-ml-") as ml_temporary:
-            runtime = (
-                args.ml_runtime.resolve() if args.ml_runtime else Path(ml_temporary) / "profile"
-            )
-            if not args.ml_runtime:
-                recorder.step(
-                    "ml-profile",
-                    [python, "tools/ml_lab.py", "provision", "floor", str(runtime)],
-                    timeout=900,
-                )
-            shutil.copy2(runtime / "profile.json", directory / "ml-profile.json")
-            ml_bundle = directory / "training-bundle"
-            recorder.step("ml-build", [python, "tools/ml_lab.py", "build", "fixed", str(ml_bundle)])
-            recorder.step(
-                "ml-bare",
-                [
-                    python,
-                    "tools/ml_lab.py",
-                    "bare",
-                    str(ml_bundle),
-                    "--report",
-                    str(directory / "ml-bare.json"),
-                ],
-            )
-            for backend in ("cpu", "interpreter"):
-                for artifact in ("wheel", "sdist"):
-                    name = f"ml-{backend}-{artifact}"
-                    recorder.step(
-                        name,
-                        [
-                            python,
-                            "tools/ml_lab.py",
-                            "test",
-                            str(ml_bundle),
-                            str(runtime),
-                            "--backend",
-                            backend,
-                            "--artifact",
-                            artifact,
-                            "--report",
-                            str(directory / f"{name}.json"),
-                        ],
-                    )
-            recorder.step(
-                "ml-gpu-guard",
-                [
-                    python,
-                    "tools/ml_lab.py",
-                    "gpu-guard",
-                    str(runtime),
-                    "--report",
-                    str(directory / "ml-gpu-unavailable.json"),
-                ],
-            )
-            recorder.step(
-                "ml-fault-experiments",
-                [
-                    python,
-                    "tools/ml_lab.py",
-                    "experiment",
-                    str(directory / "ml-experiments"),
-                    str(runtime),
-                ],
-                timeout=1200,
-            )
-            recorder.summary["native_gpu"] = "not-run; CPU/interpreter evidence only"
+        if args.with_ml:
+            check_ml(recorder, args.ml_runtime)
         if args.skip_docker:
             recorder.summary["skipped"].append("docker")
         else:
             check_docker(recorder, bundle)
-        changed = [
-            name
-            for name, digest in recorder.summary["source_sha256"].items()
-            if not (ROOT / name).is_file()
-            or hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != digest
-        ]
-        if changed:
-            raise ValueError(f"Source changed during preflight; rerun this candidate: {changed}")
+        final_sources = source_snapshot(ROOT)
+        recorder.summary["final_source_sha256"] = final_sources
+        require_same_sources(recorder.summary["source_sha256"], final_sources)
         recorder.summary["status"] = "partial" if args.skip_docker else "passed"
     except (RuntimeError, ValueError, OSError, KeyboardInterrupt) as error:
         recorder.summary.update(status="failed", error=str(error))

@@ -8,6 +8,7 @@ import sys
 
 import pytest
 
+from tools import ml_lab
 from tools.ml_lab import ROOT, inject, validate_report
 
 
@@ -115,3 +116,26 @@ def test_hash_inventory_covers_both_stacks_and_all_supported_cpu_targets():
             assert wheel["url"].startswith("https://download-r2.pytorch.org/whl/cpu/")
             assert len(bytes.fromhex(wheel["sha256"])) == 32
         assert not any("nvidia-" in requirement for requirement in profile["torch_requires_dist"])
+
+
+@pytest.mark.parametrize("action", ["test", "bare", "gpu_guard"])
+def test_existing_report_is_rejected_before_running_anything(tmp_path, monkeypatch, action):
+    report = tmp_path / "previous-pass.json"
+    original = json.dumps(valid_report())
+    report.write_text(original)
+
+    def unexpected(*args, **kwargs):
+        pytest.fail(
+            "An existing report must be rejected before inspecting or running the candidate"
+        )
+
+    monkeypatch.setattr(ml_lab, "verify", unexpected)
+    monkeypatch.setattr(ml_lab, "run", unexpected)
+    with pytest.raises(ValueError, match="Report already exists"):
+        if action == "test":
+            ml_lab.test(tmp_path / "bundle", tmp_path / "profile", "cpu", "wheel", report)
+        elif action == "bare":
+            ml_lab.bare(tmp_path / "bundle", report)
+        else:
+            ml_lab.gpu_guard(tmp_path / "profile", report)
+    assert report.read_text() == original
