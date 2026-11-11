@@ -50,6 +50,11 @@ preflight. Regression checks cover skipped/cancelled jobs, stale reports, tamper
 wheel contents, including under optimized Python. All execution and review in this follow-up
 remain AI-assisted; no new applicant-independent checks or native GPU results are claimed.
 
+At the applicant's request, Codex moved personal submission materials outside the source tree
+and configured GitHub main protection and immutable release-tag rules. Main requires a PR and
+the up-to-date `release-ready` check even for admins. Independent approval is disabled while
+there is only one maintainer; policy definitions are versioned in `.github/repository-policy/`.
+
 ## Applicant's independent checks
 
 The applicant personally configured the Pending Trusted Publisher on TestPyPI with the repository,

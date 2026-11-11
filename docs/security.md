@@ -28,8 +28,10 @@
    package metadata are checked together. TestPyPI bytes are checked again after publication.
 6. **Incomplete validation.** The always-running `release-ready` gate requires explicit success
    of build, the installed-artifact matrix and Docker. A missing, skipped, cancelled or failed
-   dependency cannot become a green gate. Publication depends on that gate. Repository required
-   checks still need configuration outside this YAML; a gate does not protect its own definition.
+   dependency cannot become a green gate. Publication depends on that gate. GitHub requires a PR
+   and an up-to-date `release-ready` from the GitHub Actions app on `main`, including for admins.
+   Branch force pushes/deletion and release-tag updates/deletion are blocked. Applied definitions
+   are in `.github/repository-policy/`. Settings are administered separately from workflow code.
 7. **Internally inconsistent or unexpected wheel contents.** The locked wheel library validates
    every member's RECORD hash. A small explicit file contract rejects duplicates, unexpected
    startup hooks/modules, modified entry points and bytes differing from source/package resources
@@ -48,8 +50,10 @@ or availability of TestPyPI. macOS, ARM, PyPy, future Python versions, restricte
 locales, proxy configurations and conflicting user environments are outside the advertised matrix.
 GitHub runners, setup-python interpreter patch versions, registry availability, the publisher's
 own transitive tooling and maintainer accounts remain trusted. A compromised maintainer could
-change the workflow and push a tag; tag reachability alone is not a code-review policy. Configure
-protected main/tags and required review before any real PyPI use. OIDC removes stored upload keys;
+change the workflow through a PR and push a tag; tag reachability alone is not a code-review policy.
+The required approval count is zero for this single-maintainer exercise. Add an independent
+reviewer for workflow/lock changes and restrict policy administration before real PyPI use.
+The owner can still change repository protection settings. OIDC removes stored upload keys;
 it does not make arbitrary repository code trustworthy. Attestations establish origin, not safety.
 
 The JSON/hash check after upload can detect an incident only **after** users can fetch that release.

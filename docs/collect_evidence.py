@@ -184,7 +184,7 @@ def main() -> None:
             "",
             "Machine-readable metadata is in runs.json; selected links/errors are in proofs.json.",
             "Raw primary-run log archives are in the local .evidence directory and submission ZIP.",
-            "Artifacts remain for 30 days; private links require reviewer access.",
+            "Artifacts have a 30-day retention period; exported logs remain in the submission ZIP.",
             "",
         ]
     )

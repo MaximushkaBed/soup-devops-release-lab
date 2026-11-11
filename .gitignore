@@ -10,3 +10,7 @@ bundle/
 dependency-bundle/
 .evidence/
 *.log
+# Personal submission materials are maintained outside the repository.
+/docs/email.txt
+/docs/submission.pdf
+/docs/render_submission.py
