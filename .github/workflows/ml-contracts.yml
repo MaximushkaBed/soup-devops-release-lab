@@ -1,0 +1,137 @@
+name: Training contracts
+run-name: "Training contracts / ${{ inputs.fault || 'fixed' }} / ${{ github.ref_name }}"
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      fault:
+        description: Temporary training fixture fault; never published
+        type: choice
+        default: fixed
+        options: [fixed, backward, adapter-detach, missing-resource, tail-mask]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install --require-hashes --only-binary=:all: -r requirements/ci.txt
+      - name: Build one wheel from sdist and bind source, distributions and profile locks
+        env:
+          FAULT: ${{ inputs.fault || 'fixed' }}
+        run: python tools/ml_lab.py build "$FAULT" training-bundle
+      - run: python -m twine check --strict training-bundle/dist/*
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: training-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: training-bundle/
+          if-no-files-found: error
+          retention-days: 30
+  bare-cli:
+    if: (inputs.fault || 'fixed') == 'fixed'
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: training-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: training-bundle
+      - run: python tools/ml_lab.py bare training-bundle --report reports/bare.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: training-bare-${{ matrix.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/
+  contracts:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04]
+        python: ['3.11', '3.12', '3.13']
+        profile: [floor, modern]
+        include:
+          - {os: windows-2022, python: '3.12', profile: floor}
+          - {os: windows-2022, python: '3.12', profile: modern}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: training-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: training-bundle
+      - id: provision
+        name: Hash-verified CPU PyTorch profile, offline installation, exact inventory and pip check
+        run: python tools/ml_lab.py provision "${{ matrix.profile }}" ml-environment
+      - name: Installed wheel CPU gradients and two-step LoRA updates
+        run: python tools/ml_lab.py test training-bundle ml-environment --backend cpu --report reports/cpu-wheel.json
+      - name: Independently rebuilt sdist CPU contract
+        if: ${{ !cancelled() && steps.provision.outcome == 'success' }}
+        run: python tools/ml_lab.py test training-bundle ml-environment --backend cpu --artifact sdist --report reports/cpu-sdist.json
+      - name: Triton interpreter FP32 wheel contract
+        if: ${{ !cancelled() && runner.os == 'Linux' && steps.provision.outcome == 'success' }}
+        run: python tools/ml_lab.py test training-bundle ml-environment --backend interpreter --report reports/interpreter-wheel.json
+      - name: Triton interpreter FP32 rebuilt-sdist contract
+        if: ${{ !cancelled() && runner.os == 'Linux' && steps.provision.outcome == 'success' }}
+        run: python tools/ml_lab.py test training-bundle ml-environment --backend interpreter --artifact sdist --report reports/interpreter-sdist.json
+      - name: Prove a CPU worker cannot record native GPU success
+        if: ${{ !cancelled() && (inputs.fault || 'fixed') == 'fixed' && steps.provision.outcome == 'success' }}
+        run: python tools/ml_lab.py gpu-guard ml-environment --report reports/gpu-unavailable.json
+      - name: Preserve actual results even when contracts fail
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: training-${{ matrix.os }}-${{ matrix.python }}-${{ matrix.profile }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            reports/
+            ml-environment/profile.json
+          if-no-files-found: warn
+          retention-days: 30
+  fault-experiments:
+    if: (inputs.fault || 'fixed') == 'fixed'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install --require-hashes --only-binary=:all: -r requirements/ci.txt
+      - run: python tools/ml_lab.py provision floor ml-environment
+      - name: Naive source forward stays green; installed wheel and rebuilt sdist catch each fault
+        run: python tools/ml_lab.py experiment reports/experiments ml-environment
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: training-fault-experiments-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/
+          if-no-files-found: error
+          retention-days: 30

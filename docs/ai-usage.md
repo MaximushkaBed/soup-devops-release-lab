@@ -34,6 +34,13 @@ log was retained and POSIX venv creation was corrected to avoid copying large Py
 The installed DevOps skills supplied workflow guidance; their assertions were checked against
 code and actual output. Claude Code and subagents were not used.
 
+The next follow-up added an independently written LoRA/SwiGLU fixture, optional ML imports,
+two pinned PyTorch/Triton CPU stacks, gradient/update contracts, fault injection and a reusable
+release gate. Codex ran CPU and actual Triton-interpreter checks and recorded the exact backend.
+Native CUDA and performance were not verified. Local actionlint caught an unquoted `:all:`
+command before upload; block scalars fixed YAML parsing. No new applicant-independent check
+is claimed for this follow-up.
+
 ## Applicant's independent checks
 
 The applicant personally configured the Pending Trusted Publisher on TestPyPI with the repository,

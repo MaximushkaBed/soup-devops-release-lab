@@ -20,6 +20,9 @@ concurrency:
   group: release-${{ github.ref }}-${{ inputs.fault || github.event_name }}
   cancel-in-progress: false
 jobs:
+  ml-contracts:
+    if: (inputs.fault || 'fixed') == 'fixed'
+    uses: ./.github/workflows/ml-contracts.yml
   build:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -102,7 +105,7 @@ jobs:
       - run: docker run --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges soup-release:ci --name Soup --json
   publish:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && github.repository == 'MaximushkaBed/soup-devops-release-lab'
-    needs: [build, artifact-tests, docker]
+    needs: [build, artifact-tests, docker, ml-contracts]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment:
