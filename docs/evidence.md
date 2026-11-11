@@ -3,8 +3,8 @@
 This ledger records the original published baseline. The later validation work and dependency
 experiments are recorded separately in [iteration-2.md](iteration-2.md).
 
-Repository: https://github.com/MaximushkaBed/soup-devops-release-lab (private).
-Actions links require repository access; invite reviewers before submission or include exported logs.
+Repository: https://github.com/MaximushkaBed/soup-devops-release-lab (public).
+Repository and Actions run pages are public; exported logs are also included with the submission.
 No failed run is deleted, hidden, or changed to success. All conclusions below were collected from the GitHub API.
 
 ## Local checks
@@ -96,4 +96,4 @@ runs remain linked above; no failures were deleted or changed to green.
 
 Machine-readable metadata is in runs.json; selected links/errors are in proofs.json.
 Raw primary-run log archives are in the local .evidence directory and submission ZIP.
-Artifacts remain for 30 days; private links require reviewer access.
+Artifacts have a 30-day retention period; exported logs are preserved in the submission archive.

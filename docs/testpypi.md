@@ -12,6 +12,8 @@ https://test.pypi.org/manage/account/publishing/ . No API token is needed.
 The repository environment permits only tags matching `v*`. There are no long-lived publishing
 credentials. PRs receive read-only repository permissions and never enter the publisher environment.
 The workflow file and tag writers remain part of the trust boundary; see security.md.
+Main requires a PR with up-to-date release checks, including for admins. Existing `v*` tags cannot
+be updated or deleted. Independent approval remains a separate requirement for real PyPI use.
 
 Baseline `v0.9.3` has already been published and independently installed. Do not move that tag
 or upload different bytes under that version. A future release needs a new version in package

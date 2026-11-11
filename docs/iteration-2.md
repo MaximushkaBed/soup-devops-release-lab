@@ -54,11 +54,13 @@ with normal and optimized smoke checks, all six dependency comparisons, actionli
 metadata checks and Docker. Full logs and hashes are under the timestamped `.evidence/preflight-*`
 directory; GitHub runs below must be inspected separately before claiming cross-platform success.
 
-GitHub's API returned HTTP 403 when inspecting rulesets and protected main for this private
-repository, with a requirement to upgrade the account or make the repository public. Enforced
-main/tag review protection therefore remains unavailable on the present plan. The repository
-has not been made public and no subscription change was made. The tag-only TestPyPI environment
-exists, but it cannot substitute for protected workflow and maintainer access.
+During the initial private-repository setup, GitHub's API returned HTTP 403 when inspecting
+rulesets and protected main, requiring a plan upgrade or a public repository. That response is
+historical: the repository is now public. Main now requires a PR and an up-to-date `release-ready`
+check, including for admins; branch force pushes/deletion and `v*` tag updates/deletion are blocked.
+These settings were applied separately from workflows; definitions are in `.github/repository-policy/`.
+Independent approval remains disabled because there is one maintainer. The tag-only TestPyPI
+environment cannot substitute for protected workflow and maintainer access.
 
 No new TestPyPI upload, production PyPI publication, paid GPU lease or employer email is part of
 these follow-up checks. The earlier applicant's personal installation verification applies to

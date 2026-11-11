@@ -162,8 +162,8 @@ dependency graph to float; this canary belongs to the HTTP fixture.
 
 See [incident details](docs/incidents.md), [security and limits](docs/security.md),
 [GPU design](docs/gpu-ci.md), [evidence](docs/evidence.md), and [AI disclosure](docs/ai-usage.md).
-The submission note is `docs/submission.pdf` (two pages). It distinguishes the published baseline
-from the follow-up validation. Fresh matrix results and all six demonstrated failures are in
+The two-page submission note and email draft are kept locally and sent separately.
+Fresh matrix results and all six demonstrated failures are in
 [iteration-2.md](docs/iteration-2.md); the original evidence remains available separately.
 
 ## Releases
@@ -175,8 +175,12 @@ artifact that was tested. No rebuilding occurs in the publisher. Only that job r
 The always-running `release-ready` job checks the explicit results of build, the complete installed
 artifact matrix and Docker: every result must be `success`. Failure, cancellation, skipped/missing
 jobs and unknown results are rejected. Publish depends on this gate; its intentional skip on PRs
-and ordinary main pushes is separate. Configure `release-ready` as a required repository check;
-the workflow file alone does not create branch protection. Documentation-only pushes also run it.
+and ordinary main pushes is separate. GitHub enforces PRs and an up-to-date `release-ready` check
+from GitHub Actions on `main`, including for administrators. Force pushes and branch deletion are
+blocked; active rules also prevent updating or deleting `v*` release tags. The applied definitions
+are in [.github/repository-policy/](.github/repository-policy/). Independent approval is currently
+set to zero because this repository has one maintainer; a second reviewer is needed to enforce it.
+Documentation-only pushes also run release checks.
 A final clean install verifies the version and SHA-256 digests served by TestPyPI.
 Index verification also runs after a failed upload attempt, since a two-file upload can leave
 only part of the release published. It cannot turn the failed publisher green or undo uploaded
