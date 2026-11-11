@@ -68,6 +68,7 @@ def test(artifact: Path) -> None:
             if len(wheels) != 1:
                 raise ValueError(f"Expected exactly one rebuilt wheel, found: {wheels}")
             wheel = wheels[0]
+            run([python, "-I", str(ROOT / "tools/check_wheel.py"), str(wheel)], work)
         runtime = work / "runtime"
         venv.create(runtime, with_pip=True, symlinks=os.name != "nt")
         python = str(python_in(runtime))

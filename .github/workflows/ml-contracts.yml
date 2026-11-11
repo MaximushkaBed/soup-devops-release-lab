@@ -1,6 +1,11 @@
 name: Training contracts
 run-name: "Training contracts / ${{ inputs.fault || 'fixed' }} / ${{ github.ref_name }}"
 on:
+  push:
+    branches: [main]
+    paths: ['fixtures/training/**', 'tools/ml_lab.py', 'requirements/ml-*', 'requirements/build.*', 'requirements/ci.*', 'tests/pipeline/test_ml_guards.py', '.github/workflows/ml-contracts.yml']
+  pull_request:
+    paths: ['fixtures/training/**', 'tools/ml_lab.py', 'requirements/ml-*', 'requirements/build.*', 'requirements/ci.*', 'tests/pipeline/test_ml_guards.py', '.github/workflows/ml-contracts.yml']
   workflow_call:
   workflow_dispatch:
     inputs:

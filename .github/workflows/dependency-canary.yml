@@ -1,0 +1,72 @@
+name: Fresh dependency canary
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: dependency-canary-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install --require-hashes --only-binary=:all: -r requirements/ci.txt
+      - run: python tools/dependency_lab.py build fixed dependency-bundle
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: canary-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dependency-bundle/
+          if-no-files-found: error
+  fresh:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.14']
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: canary-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dependency-bundle
+      - name: Resolve fresh supported dependencies and exercise installed HTTP contracts
+        run: python tools/dependency_lab.py test dependency-bundle --profile fresh --report reports/fresh.json
+      - name: Preserve inventory after successful contracts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: fresh-${{ matrix.python }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/
+          if-no-files-found: ignore
+  canary-result:
+    if: always()
+    needs: [build, fresh]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python tools/check_jobs.py build fresh

@@ -41,6 +41,15 @@ Native CUDA and performance were not verified. Local actionlint caught an unquot
 command before upload; block scalars fixed YAML parsing. No new applicant-independent check
 is claimed for this follow-up.
 
+Research follow-up compared immutable workflow/script snapshots from Soup, pipx, NumPy and PEFT.
+Codex research subagents collected primary sources and produced local reports; this does not
+establish successful upstream runs or private repository settings. Implementation added an
+explicit success-only release gate, wheel RECORD/content/source checks and a separate floating
+dependency canary. The unrelated ML fixture now has independent triggers and an opt-in local
+preflight. Regression checks cover skipped/cancelled jobs, stale reports, tampered or unexpected
+wheel contents, including under optimized Python. All execution and review in this follow-up
+remain AI-assisted; no new applicant-independent checks or native GPU results are claimed.
+
 ## Applicant's independent checks
 
 The applicant personally configured the Pending Trusted Publisher on TestPyPI with the repository,

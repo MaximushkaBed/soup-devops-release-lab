@@ -18,6 +18,7 @@ python -m ruff format --check .
 python -m pytest -q
 python -m build --no-isolation --outdir bundle/dist
 python -m twine check --strict bundle/dist/*
+python tools/check_wheel.py bundle/dist/*.whl
 python tools/provenance.py record bundle
 python tools/test_artifact.py bundle/dist/*.whl
 python tools/test_artifact.py bundle/dist/*.tar.gz
@@ -41,12 +42,13 @@ python tools/preflight.py
 ```
 
 This checks workflow syntax (without optional ShellCheck), Ruff, all tests, a fresh build, strict
-metadata, provenance, and negative guards with normal and optimized Python. It then tests both
+metadata, wheel RECORD/content/source-byte contracts, provenance, and negative guards with normal
+and optimized Python. It then tests both
 installed artifacts, builds Docker using the actual Dockerfile and ignore rules, and validates the
-container's CLI output. It also runs installed CPU/Triton-interpreter training contracts and
-17 controlled training comparisons. Its disposable ML profile downloads roughly 0.5 GB and
-needs about 2 GB of temporary disk space. Reuse a verified existing profile with
-`--ml-runtime .evidence/ml-environments/floor`; its dependency inventory is checked before each test.
+container's CLI output. Add `--with-ml` to also run the separate installed CPU/Triton-interpreter
+training contracts and 17 controlled training comparisons. That optional fixture downloads roughly
+0.5 GB and needs about 2 GB of temporary disk space. Reuse a verified existing profile with
+`--with-ml --ml-runtime .evidence/ml-environments/floor`; its inventory is checked before each test.
 Docker uses an isolated configuration directory, a temporary container and a temporary image tag;
 both are removed even after a failed smoke test. Builder network access is needed for hashed tools;
 application execution uses local deterministic data. No release is published by preflight.
@@ -55,10 +57,11 @@ Each run creates a separate `.evidence/preflight-*/` directory with the candidat
 command output, exit codes, durations, commit, working-tree status, source hashes and `summary.json`.
 The first failed gate stops the run with a nonzero exit code and keeps its log. Commands that time
 out have their process trees terminated. Source hashes are checked again at completion, and a
-changed candidate cannot receive a passing report. Missing actionlint
+changed candidate cannot receive a passing report. Added, removed and renamed Git-visible source
+files are checked along with modified file contents; ignored generated output is excluded. Missing actionlint
 or Docker is an error. `--skip-docker` explicitly produces a `partial` report, never `passed`.
 These local checks cover the current OS/Python only; the remote ten-target matrix remains required.
-The complete ML preflight requires Linux x86_64 and Python 3.11–3.13. The greeting package's
+The optional ML preflight requires Linux x86_64 and Python 3.11–3.13. The greeting package's
 separate artifact tester covers its other targets. Native GPU validation remains unexecuted.
 
 ## Training contracts for Soup
@@ -75,16 +78,30 @@ python tools/ml_lab.py experiment .evidence/training-experiments .evidence/ml-en
 ```
 
 Use new build/profile/experiment directories for independent runs. For the other stack, provision
-`modern` into another directory. The reusable **Training contracts** workflow is required by
-**Release checks**: Linux Python 3.11/3.12/3.13 × two stacks, plus Windows Python 3.12 × two stacks.
+`modern` into another directory. The independent **Training contracts** workflow runs when its
+code, tools or locks change, and on manual dispatch. Its matrix covers Linux Python
+3.11/3.12/3.13 × two stacks, plus Windows Python 3.12 × two stacks.
 Each tests the installed wheel and rebuilt sdist; Linux also executes real Triton interpretation
 in FP32. A separate two-OS job verifies help/version without ML dependencies. Failed reports and
-original fault logs are uploaded. See [contracts and limits](docs/training-contracts.md).
+original fault logs are uploaded. It does not gate publication of the unrelated greeting CLI.
+See [contracts and limits](docs/training-contracts.md).
+
+Report output paths must also be new. Existing reports are preserved and rejected before work
+starts. Each probe writes into a private temporary directory; its exit code alone cannot establish
+success. Only a newly written and validated report is exported as successful evidence.
 
 Pipeline regression tests live in `tests/pipeline/`; the deliberately naive workflow continues
 to run only `tests/unit/`. Negative tests require the expected cause of rejection, including with
 `python -O`. Installed CLI checks also cover default/text output, Unicode and empty names, help,
 missing arguments, stderr and exit codes.
+
+The wheel contract reads every member through the locked `wheel` library to validate RECORD
+hashes. It rejects duplicate members, missing or unexpected files (including `.pth` startup hooks),
+changed package/license bytes and altered entry points. It runs before the original wheel is
+uploaded and on the wheel rebuilt from each sdist. Installed tests separately check the greeting
+resource and entry-point metadata. RECORD consistency alone does not establish that code is safe.
+Git attributes keep compared source, resource and license bytes in LF form on Windows as well
+as Linux, including checkouts configured with `core.autocrlf=true`.
 
 ## Demonstrations
 
@@ -125,6 +142,24 @@ The dispatch-only historical **Dependency compatibility** workflow runs the same
 Python 3.10/3.14, and both dependency profiles (eight combinations). Its dispatch fault modes
 leave broken combinations red; there is no publication job. See [iteration details](docs/iteration-2.md).
 
+**Fresh dependency canary** runs weekly and on manual dispatch, separately from releases. It builds
+the fixed HTTP fixture once and resolves fresh PyPI dependencies within its declared support ranges
+on Python 3.10 and 3.14. It uses a single explicit index, no pip configuration/cache, and a clean
+runtime outside the checkout; the HTTP scenarios themselves use deterministic offline transports.
+Successful reports preserve exact installed versions, artifact hashes and run identity. A failed
+probe remains red with its original Actions log; an old report cannot be reused. This complements
+the two frozen historical profiles and does not automatically update their locks.
+
+To reproduce on the current OS/Python after installing the locked build tools:
+
+```sh
+python tools/dependency_lab.py build fixed .evidence/fresh-bundle
+python tools/dependency_lab.py test .evidence/fresh-bundle --profile fresh --report .evidence/fresh-report.json
+```
+
+Use new bundle/report paths for each run. The dependency-free greeting CLI itself has no runtime
+dependency graph to float; this canary belongs to the HTTP fixture.
+
 See [incident details](docs/incidents.md), [security and limits](docs/security.md),
 [GPU design](docs/gpu-ci.md), [evidence](docs/evidence.md), and [AI disclosure](docs/ai-usage.md).
 The submission note is `docs/submission.pdf` (two pages). It distinguishes the published baseline
@@ -137,7 +172,15 @@ See [TestPyPI setup](docs/testpypi.md). Baseline `v0.9.3` is already published; 
 For a future release, bump the version and version expectations, and use a new matching tag.
 A release must be on `main`, match package metadata, pass all gates, and publish the same immutable
 artifact that was tested. No rebuilding occurs in the publisher. Only that job receives OIDC access.
+The always-running `release-ready` job checks the explicit results of build, the complete installed
+artifact matrix and Docker: every result must be `success`. Failure, cancellation, skipped/missing
+jobs and unknown results are rejected. Publish depends on this gate; its intentional skip on PRs
+and ordinary main pushes is separate. Configure `release-ready` as a required repository check;
+the workflow file alone does not create branch protection. Documentation-only pushes also run it.
 A final clean install verifies the version and SHA-256 digests served by TestPyPI.
+Index verification also runs after a failed upload attempt, since a two-file upload can leave
+only part of the release published. It cannot turn the failed publisher green or undo uploaded
+files. A cancelled workflow still requires manual inspection of the index before retrying.
 
 ## Updating tools
 

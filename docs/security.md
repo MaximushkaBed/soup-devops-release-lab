@@ -26,6 +26,19 @@
 5. **Version/tag divergence.** Both distribution metadata versions must agree and an upload tag
    must equal `v<version>` exactly. A tag must point into main's history. Installed CLI version and
    package metadata are checked together. TestPyPI bytes are checked again after publication.
+6. **Incomplete validation.** The always-running `release-ready` gate requires explicit success
+   of build, the installed-artifact matrix and Docker. A missing, skipped, cancelled or failed
+   dependency cannot become a green gate. Publication depends on that gate. Repository required
+   checks still need configuration outside this YAML; a gate does not protect its own definition.
+7. **Internally inconsistent or unexpected wheel contents.** The locked wheel library validates
+   every member's RECORD hash. A small explicit file contract rejects duplicates, unexpected
+   startup hooks/modules, modified entry points and bytes differing from source/package resources
+   or LICENSE. Sdist rebuilds are checked too. This is specific to the greeting package's layout,
+   not a general malware scanner; a malicious change to both source and policy remains trusted.
+
+The floating HTTP dependency canary is a separate weekly/manual signal. Its resolved versions
+are recorded rather than promoted into the frozen release environment. The ML fixture also has
+its own workflow, because its PyTorch/Triton checks do not establish greeting release correctness.
 
 ## What green does not prove
 

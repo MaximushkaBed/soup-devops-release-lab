@@ -302,7 +302,13 @@ def validate_report(report, backend, check):
             raise ValueError("Training evidence omitted required numerical cases or updates")
 
 
+def require_new_report(report_path):
+    if report_path.exists() or report_path.is_symlink():
+        raise ValueError(f"Report already exists; use a new output path: {report_path}")
+
+
 def test(bundle, directory, backend, artifact, report_path, naive=False):
+    require_new_report(report_path)
     manifest = verify(bundle)
     profile = json.loads((directory / "profile.json").read_text(encoding="utf-8"))
     if profile["locks"] != identity()["locks"]:
@@ -320,6 +326,7 @@ def test(bundle, directory, backend, artifact, report_path, naive=False):
         raise ValueError("Runtime dependencies changed after provisioning")
     with tempfile.TemporaryDirectory(prefix="soup-ml-test-") as temporary:
         work = Path(temporary)
+        probe_report = work / "probe.json"
         check = "forward" if naive else "training"
         if naive:
             command = [
@@ -384,13 +391,13 @@ def test(bundle, directory, backend, artifact, report_path, naive=False):
             run([executable, "--version"], work)
             command = [python, "-I", "-O", "-m", "soup_training_probe.cli"]
         code = run(
-            [*command, "--backend", backend, "--check", check, "--report", report_path],
+            [*command, "--backend", backend, "--check", check, "--report", probe_report],
             work,
             check=False,
         )
-        if not report_path.is_file():
+        if not probe_report.is_file():
             raise ValueError("Probe exited without writing its contract report")
-        report = json.loads(report_path.read_text(encoding="utf-8"))
+        report = json.loads(probe_report.read_text(encoding="utf-8"))
         report.update(
             artifact=artifact,
             naive=naive,
@@ -399,8 +406,8 @@ def test(bundle, directory, backend, artifact, report_path, naive=False):
             profile=profile,
             exit_code=code,
         )
-        save(report_path, report)
         if code:
+            save(report_path, report)
             raise RuntimeError(f"Training contract failed: {report.get('error')}")
         validate_report(report, backend, check)
         if report.get("torch") != profile["installed"]["torch"] or (
@@ -409,12 +416,15 @@ def test(bundle, directory, backend, artifact, report_path, naive=False):
             raise ValueError("Probe used a different PyTorch/Triton version than the profile")
         if not naive and not Path(report["module"]).is_relative_to(directory / "runtime"):
             raise ValueError("Training probe was imported outside the installed runtime")
+        save(report_path, report)
 
 
 def bare(bundle, report_path):
+    require_new_report(report_path)
     verify(bundle)
     with tempfile.TemporaryDirectory(prefix="soup-ml-bare-") as temporary:
         work = Path(temporary)
+        probe_report = work / "probe.json"
         runtime = work / "runtime"
         venv.create(runtime, with_pip=True, symlinks=os.name != "nt")
         python = python_in(runtime)
@@ -439,36 +449,41 @@ def bare(bundle, report_path):
         ]
         run([*command, "--help"], work)
         run([*command, "--version"], work)
-        code = run([*command, "--report", report_path], work, check=False)
-        report = json.loads(report_path.read_text(encoding="utf-8"))
+        code = run([*command, "--report", probe_report], work, check=False)
+        report = json.loads(probe_report.read_text(encoding="utf-8"))
         if code != 1 or report.get("error", {}).get("code") != "training-dependencies-missing":
             raise ValueError(f"Bare CLI failed for the wrong reason: {report}")
+        save(report_path, report)
 
 
 def gpu_guard(directory, report_path):
+    require_new_report(report_path)
     python = python_in(directory / "runtime")
-    code = run(
-        [
-            python,
-            "-I",
-            "-O",
-            "-m",
-            "soup_training_probe.cli",
-            "--backend",
-            "cuda",
-            "--report",
-            report_path,
-        ],
-        directory,
-        check=False,
-    )
-    report = json.loads(report_path.read_text(encoding="utf-8"))
+    with tempfile.TemporaryDirectory(prefix="soup-gpu-guard-") as temporary:
+        probe_report = Path(temporary) / "probe.json"
+        code = run(
+            [
+                python,
+                "-I",
+                "-O",
+                "-m",
+                "soup_training_probe.cli",
+                "--backend",
+                "cuda",
+                "--report",
+                probe_report,
+            ],
+            directory,
+            check=False,
+        )
+        report = json.loads(probe_report.read_text(encoding="utf-8"))
     if (
         code != 3
         or report.get("error", {}).get("code") != "gpu-unavailable"
         or (report.get("native_cuda") is not False or report.get("status") != "failed")
     ):
         raise ValueError(f"CPU worker incorrectly accepted a GPU gate: {report}")
+    save(report_path, report)
 
 
 def experiment(directory, runtime):

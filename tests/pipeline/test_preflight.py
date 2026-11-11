@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.preflight import Recorder
+from tools.preflight import Recorder, require_same_sources, source_snapshot
 from tools.smoke import invoke
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -129,3 +129,31 @@ def test_broken_report_is_rejected_under_optimized_python(change):
     )
     assert result.returncode != 0
     assert "ValueError" in result.stderr
+
+
+@pytest.mark.parametrize("mutation", ["added", "removed", "changed", "renamed"])
+def test_source_snapshot_rejects_inventory_and_content_changes(tmp_path, mutation):
+    subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True, capture_output=True)
+    source = tmp_path / "app.py"
+    source.write_text("value = 1\n")
+    initial = source_snapshot(tmp_path)
+    if mutation == "added":
+        (tmp_path / "new_module.py").write_text("value = 2\n")
+    elif mutation == "removed":
+        source.unlink()
+    elif mutation == "renamed":
+        source.rename(tmp_path / "renamed.py")
+    else:
+        source.write_text("value = 2\n")
+    with pytest.raises(ValueError, match="Source changed during preflight"):
+        require_same_sources(initial, source_snapshot(tmp_path))
+
+
+def test_source_snapshot_accepts_generated_ignored_outputs(tmp_path):
+    subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True, capture_output=True)
+    (tmp_path / ".gitignore").write_text(".evidence/\n")
+    (tmp_path / "app.py").write_text("value = 1\n")
+    initial = source_snapshot(tmp_path)
+    (tmp_path / ".evidence").mkdir()
+    (tmp_path / ".evidence/result.json").write_text('{"status": "passed"}')
+    require_same_sources(initial, source_snapshot(tmp_path))

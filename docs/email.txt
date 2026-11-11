@@ -3,15 +3,16 @@ Hi Soup Team,
 Please find my DevOps Engineer take-home submission:
 
 Repository: https://github.com/MaximushkaBed/soup-devops-release-lab
-Current release and training checks:
+Release checks:
 https://github.com/MaximushkaBed/soup-devops-release-lab/actions/workflows/release.yml
+Independent training checks:
+https://github.com/MaximushkaBed/soup-devops-release-lab/actions/workflows/ml-contracts.yml
 Training contracts and reproduction commands:
 https://github.com/MaximushkaBed/soup-devops-release-lab/blob/main/docs/training-contracts.md
 Published baseline: https://test.pypi.org/project/soup-release-lab-maximushkabed/0.9.3/
 
-Attached: submission.pdf (two pages) and soup-devops-improved-submission.zip, containing source,
-Git history, checksums and exported raw Actions/local evidence. The repository is private;
-reviewers can use the archive immediately or share GitHub usernames for access.
+Attached: submission.pdf (two pages) and soup-devops-hardened-submission.zip, containing source,
+Git history, checksums and exported raw Actions/local evidence. The repository is public.
 
 The original four incidents demonstrate why source tests cannot validate a release. To make
 this relevant to Soup's post-training work, I added an independently written LoRA/SwiGLU fixture
@@ -29,8 +30,8 @@ configured TestPyPI's Trusted Publisher, installed the published 0.9.3 baseline 
 and verified the CLI output. The new training checks were AI-assisted, as disclosed in
 docs/ai-usage.md. No native GPU execution or performance improvement is claimed: the actual
 Triton interpreter runs on CPU, and the CUDA probe explicitly fails without a real GPU.
-No paid GPU was rented. The GPU cost controls remain a design. The note explains the remaining
-private-repository protection blocker before unattended real PyPI publication.
+No paid GPU was rented. The GPU cost controls remain a design. The note explains repository
+protection and workflow-review requirements before unattended real PyPI publication.
 
 Best,
 Maksim

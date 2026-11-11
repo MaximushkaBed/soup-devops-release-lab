@@ -1,4 +1,7 @@
 *.pdf binary
+*.py text eol=lf
+src/soup_release_lab/greeting.txt text eol=lf
+LICENSE text eol=lf
 requirements/*.txt text eol=lf
 requirements/*.in text eol=lf
 requirements/*.json text eol=lf
