@@ -41,6 +41,12 @@ only about 196 MiB free and Python's venv builder copied large interpreter binar
 environment failure, not evidence of a dependency defect. The failed log is preserved. POSIX test
 venvs now use interpreter symlinks; Windows retains copies. Preflight also checks available space.
 
+The first remote dependency matrix, run 42971946086, also failed on Windows before application
+execution: Git's automatic CRLF conversion changed the lock-file bytes and therefore the profile
+hash. A local regression test reproduced a Windows-style checkout and failed before correction.
+The repository now enforces LF for requirements inputs/locks; identity verification remains
+enabled. The initial run is retained and is not counted as proof of a dependency defect.
+
 ## Boundaries
 
 Local Linux / CPython 3.13.9 validation passed 65 regression/unit tests, both installed artifacts

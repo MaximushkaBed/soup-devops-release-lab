@@ -108,8 +108,9 @@ def build(fault: str, bundle: Path) -> None:
 
 def test(bundle: Path, profile: str, naive: bool) -> None:
     manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
-    if any(manifest.get(key) != value for key, value in identity().items()):
-        raise ValueError("Dependency fixture identity or profile locks differ")
+    mismatches = [key for key, value in identity().items() if manifest.get(key) != value]
+    if mismatches:
+        raise ValueError(f"Dependency fixture identity or profile locks differ: {mismatches}")
     actual = {
         path.name: hashlib.sha256(path.read_bytes()).hexdigest()
         for path in sorted((bundle / "dist").iterdir())
