@@ -10,7 +10,7 @@ from soup_release_lab.cli import main, report
 def test_report_uses_resource_and_utc():
     result = report("Soup")
     assert result["greeting"] == "Hello, Soup!"
-    assert result["version"] == "0.9.3"
+    assert result["version"] == "0.9.4"
     assert result["user"]
     assert datetime.fromisoformat(result["timestamp"]).utcoffset().total_seconds() == 0
 
