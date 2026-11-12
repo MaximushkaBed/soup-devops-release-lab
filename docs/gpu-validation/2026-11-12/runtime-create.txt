@@ -1,0 +1,3 @@
+Using CPython 3.12.13
+Creating virtual environment at: /tmp/soup-cuda-work-20261112/runtime
+Activate with: source /tmp/soup-cuda-work-20261112/runtime/bin/activate

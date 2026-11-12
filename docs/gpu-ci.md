@@ -1,9 +1,29 @@
-# Native GPU CI design (not executed)
+# Native GPU validation and proposed CI lifecycle
 
 The greeting CLI is CPU-only. The separate [training fixture](training-contracts.md) implements
 a native CUDA SwiGLU/LoRA probe alongside CPU and Triton-interpreter contracts. Interpretation
-cannot validate compiled GPU kernels. No native GPU test was executed; this design describes
-the remaining provisioning and budget controls.
+cannot validate compiled GPU kernels. One native run is now recorded below; recurring GPU CI,
+the OIDC broker and the monthly-budget watchdog remain a design.
+
+## Recorded native run — 2026-11-12
+
+The independently packaged training fixture from source commit `463e000` ran on a Brev
+Paperspace RTX A4000 (16 GB, SM86), driver 535.54.03, Python 3.12.13, PyTorch 2.6.0+cu124,
+CUDA runtime 12.4 and Triton 3.2.0. Its source files match the current training fixture.
+
+- Installed wheel and independently rebuilt sdist passed native CUDA forward/backward checks
+  across FP32/FP16/BF16, empty and strided inputs, irregular tails and two LoRA optimizer steps.
+- Four injected faults failed with their specific expected errors. The missing-resource case
+  fails before CUDA execution; backward/tail errors exercise the actual GPU path.
+- Compute Sanitizer memcheck completed with `ERROR SUMMARY: 0 errors` on the fixed wheel.
+- The instance was deleted and Brev returned an empty instance list. At the catalog rate of
+  $0.96/hour, the 679-second session estimates $0.18 of compute; the invoice was not checked.
+
+[Raw reports, logs, runtime lock and commands](gpu-validation/2026-11-12/README.md) preserve the
+exact source/artifact identities. This is functional evidence for this one configuration.
+It does not establish speedups, memory savings, race freedom, production Soup-kernel correctness
+or coverage of other GPU/software combinations. The sanitizer's exact version was not captured.
+The following architecture and Runpod cost scenario remain a separate deployment proposal.
 
 ## When and what
 
