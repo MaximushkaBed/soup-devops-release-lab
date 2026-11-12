@@ -10,7 +10,8 @@ AI-generated claims are not treated as evidence without tool output.
 
 Actual commands, Actions links, outputs and corrections are recorded in evidence.md and Git
 history. Local checks executed by Codex are **AI-assisted checks**, not checks independently
-performed by the applicant. No GPU execution or reviewer access is claimed.
+performed by the applicant. Native GPU execution was added in the dated follow-up below;
+reviewer access is not claimed.
 
 ## Corrections made during AI-assisted review
 
@@ -54,6 +55,18 @@ At the applicant's request, Codex moved personal submission materials outside th
 and configured GitHub main protection and immutable release-tag rules. Main requires a PR and
 the up-to-date `release-ready` check even for admins. Independent approval is disabled while
 there is only one maintainer; policy definitions are versioned in `.github/repository-policy/`.
+
+A further AI review supplied by the applicant identified a false source-byte rejection in the
+demonstration path. Codex reproduced it and corrected consumer candidate reconstruction and LF
+output. The original source-byte guard had been added without repeating all four demonstrations;
+the new regression and repeated Actions runs are separate from the original submission evidence.
+
+On 2026-11-12 the applicant logged into Brev and explicitly approved one A4000 lease, a budget up
+to $2 and deletion after results were saved. Codex prepared the hashed CUDA environment, ran
+installed wheel/sdist contracts, four fault controls and memcheck, then confirmed the instance
+was gone. These GPU results are AI-assisted. A cleanup CLI call interpreted piped `y` as another
+instance name and returned an error; the approved instance was deleted and a subsequent delete
+reported it already absent. Raw technical evidence is in `docs/gpu-validation/2026-11-12/`.
 
 ## Applicant's independent checks
 

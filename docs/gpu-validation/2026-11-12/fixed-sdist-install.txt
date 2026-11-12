@@ -1,0 +1,7 @@
+Using Python 3.12.13 environment at: /tmp/soup-cuda-work-20261112/runtime
+Resolved 1 package in 1ms
+Prepared 1 package in 6ms
+Uninstalled 1 package in 0.39ms
+Installed 1 package in 9ms
+ - soup-training-contract-lab==0.1.0 (from file:///tmp/soup-cuda-input-20261112/bundles/fixed/dist/soup_training_contract_lab-0.1.0-py3-none-any.whl)
+ + soup-training-contract-lab==0.1.0 (from file:///tmp/soup-cuda-work-20261112/rebuilt/soup_training_contract_lab-0.1.0-py3-none-any.whl)

@@ -1,0 +1,238 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "name": "fixed-wheel",
+      "exit_code": 0,
+      "expected_error": null,
+      "verified": true,
+      "wheel_sha256": "fe4495b5440005ba36c06b1c8682c82979616441c3a4f5fd83e046e5e970e86f"
+    },
+    {
+      "name": "fixed-sdist",
+      "exit_code": 0,
+      "expected_error": null,
+      "verified": true,
+      "wheel_sha256": "f13bd87fde13448b50139f3b719f4f109e459b57d962800cd3bfd07e4aced6fa"
+    },
+    {
+      "name": "backward",
+      "exit_code": 1,
+      "expected_error": "gradient-mismatch",
+      "verified": true,
+      "wheel_sha256": "9eb8b7b83d784f20914f350e4fdaf87a5eb75145f387e42640cdb5ab2eb5697f"
+    },
+    {
+      "name": "adapter-detach",
+      "exit_code": 1,
+      "expected_error": "adapter-gradient-missing",
+      "verified": true,
+      "wheel_sha256": "c3adebe84a4d65e5355c44fd1ca07abb3d6783fdd84f30926828ad8836ea3231"
+    },
+    {
+      "name": "missing-resource",
+      "exit_code": 1,
+      "expected_error": "kernel-resource-missing",
+      "verified": true,
+      "wheel_sha256": "b74a5455f694d47a2ded60847d0a76b8d93abe99cc703056ed2ab6c5026a3d23"
+    },
+    {
+      "name": "tail-mask",
+      "exit_code": 1,
+      "expected_error": "forward-mismatch",
+      "verified": true,
+      "wheel_sha256": "a69e2c3159fedae6eb9640970f898847d1f5b1936bffd5627cfdfc63ef9cf76d"
+    },
+    {
+      "name": "memcheck",
+      "exit_code": 0,
+      "expected_error": null,
+      "verified": true,
+      "wheel_sha256": "fe4495b5440005ba36c06b1c8682c82979616441c3a4f5fd83e046e5e970e86f"
+    }
+  ],
+  "sanitizer": "passed",
+  "benchmark": "not-run",
+  "receipt": {
+    "commit": "463e000c81426b96da77455f9d9da12967957aaa",
+    "python": "3.12",
+    "torch": "2.6.0+cu124",
+    "triton": "3.2.0",
+    "uv": "0.12.0",
+    "files": {
+      "cuda.in": "d4c7356b429bb3594c2170a6b9a170479a4176aaec0995c75083b7b4a70649c6",
+      "cuda.txt": "464a5a2ba73a6c0bac5b0c96d7288235751d52589f319f0a0221e6afc2befc61",
+      "run_cuda.py": "9396e84630439e4bd43d9ae0221070bcd6564bed0761351845ff768f908e01fd",
+      "uv": "b6e3cb5b4858d920c63e1d88e31a7a4d8f567073ee4e5e4a1889f93984dc28ea",
+      "build.txt": "699c49c28086e7214721377924191acfb105dd6d4c682159e93a2bcb5744919a",
+      "floor-constraints.txt": "91b60e2fa424453c6e7bdfafc27bff5cf8ac1d3264ec6aa5d91d159a2879c789",
+      "bundles/adapter-detach/manifest.json": "3900c42d50d3372e6a709e2aaccf6cf5fe685ee6a57d1a50ff2b5dcde07f96a2",
+      "bundles/fixed/manifest.json": "11665b28843cbbc7e3064f47191ee9f02e5da050f3ac0f9eb01ed78793556521",
+      "bundles/tail-mask/manifest.json": "a783af3d032ca5498064d20d5a558417f3441888f349696af8fbb7046725aff0",
+      "bundles/backward/manifest.json": "0b5182be9fefc4cef51c392882cd19bd9cf71b114ec7bd5bd6412f0038e3c230",
+      "bundles/missing-resource/manifest.json": "35c68738695d4d35602e2a4987cbdf3dfd116dda94f307590ead74f37bd84303",
+      "bundles/missing-resource/dist/soup_training_contract_lab-0.1.0-py3-none-any.whl": "b74a5455f694d47a2ded60847d0a76b8d93abe99cc703056ed2ab6c5026a3d23",
+      "bundles/missing-resource/dist/soup_training_contract_lab-0.1.0.tar.gz": "d50e3caa2afe906b340a46a9853f6f0438cbef8415e709a9105a5fdde5c0e043",
+      "bundles/missing-resource/source/README.md": "0111539c12cc3cd6b9d4f435920997692bd7ae3ef740c1105be33d4617477d86",
+      "bundles/missing-resource/source/pyproject.toml": "021c7896c9f4afb27e1f3fa243937f5b88adfc7f935e251f69f55dc612b7bdea",
+      "bundles/missing-resource/source/src/soup_training_probe/activation.py": "e29d16f8e18a984a4719bc3ab192ff7841c0014347495ce431bc5cebb14bd762",
+      "bundles/missing-resource/source/src/soup_training_probe/kernels.py": "ba4c60ab48e917312e822a9b72a8e34d215416a8c90ea7462044a5872917f2d0",
+      "bundles/missing-resource/source/src/soup_training_probe/cli.py": "11e557a629cddbf5cd0a05236b10301bf8bdfe14a950a45cf90dab84bc74e63c",
+      "bundles/missing-resource/source/src/soup_training_probe/__init__.py": "35f04eb1c6cffcb77fa6c1f61614de4467861b098443ca5b1746170b73777539",
+      "bundles/missing-resource/source/src/soup_training_probe/model.py": "3e6f4445f703df5e09e9bf52e361e25de657dbb3f29112c6be55d4b3734455a2",
+      "bundles/missing-resource/source/src/soup_training_probe/errors.py": "444f33c22bdfb6c03bc88eb2b6925c8a47996fd8ff36d8bc9c7ece93a393bb13",
+      "bundles/missing-resource/source/src/soup_training_probe/kernel-contract.json": "5469f744d8d994fd213f4802250366631758e13b881d3b7fa36cac0f9712c5bb",
+      "bundles/missing-resource/source/src/soup_training_probe/checks.py": "1d60da9566fbd068efcaffccdb30be0933dc60b3fc81b7e49f4ca446472440d7",
+      "bundles/backward/dist/soup_training_contract_lab-0.1.0-py3-none-any.whl": "9eb8b7b83d784f20914f350e4fdaf87a5eb75145f387e42640cdb5ab2eb5697f",
+      "bundles/backward/dist/soup_training_contract_lab-0.1.0.tar.gz": "eadf178b3c6758d7e43ce341f1e22c5479d54577762ae6f3499b011f5427e427",
+      "bundles/backward/source/README.md": "0111539c12cc3cd6b9d4f435920997692bd7ae3ef740c1105be33d4617477d86",
+      "bundles/backward/source/pyproject.toml": "ddd6482314a02ff075e7465e285f872adeae1bcf3b5f903cf0e1b8de7dfde7c2",
+      "bundles/backward/source/src/soup_training_probe/activation.py": "9c5c840fad4d9c174ac9602ba9202d3035c1f583ad46bf3bb7bf6d18b12f3f26",
+      "bundles/backward/source/src/soup_training_probe/kernels.py": "1146f3fb2a9259833423cafd2d01b7c4d702a1fcb243a8aa35b60fb2fc452328",
+      "bundles/backward/source/src/soup_training_probe/cli.py": "11e557a629cddbf5cd0a05236b10301bf8bdfe14a950a45cf90dab84bc74e63c",
+      "bundles/backward/source/src/soup_training_probe/__init__.py": "35f04eb1c6cffcb77fa6c1f61614de4467861b098443ca5b1746170b73777539",
+      "bundles/backward/source/src/soup_training_probe/model.py": "3e6f4445f703df5e09e9bf52e361e25de657dbb3f29112c6be55d4b3734455a2",
+      "bundles/backward/source/src/soup_training_probe/errors.py": "444f33c22bdfb6c03bc88eb2b6925c8a47996fd8ff36d8bc9c7ece93a393bb13",
+      "bundles/backward/source/src/soup_training_probe/kernel-contract.json": "5469f744d8d994fd213f4802250366631758e13b881d3b7fa36cac0f9712c5bb",
+      "bundles/backward/source/src/soup_training_probe/checks.py": "1d60da9566fbd068efcaffccdb30be0933dc60b3fc81b7e49f4ca446472440d7",
+      "bundles/tail-mask/dist/soup_training_contract_lab-0.1.0-py3-none-any.whl": "a69e2c3159fedae6eb9640970f898847d1f5b1936bffd5627cfdfc63ef9cf76d",
+      "bundles/tail-mask/dist/soup_training_contract_lab-0.1.0.tar.gz": "145a5ea08c3949aaa91593f56a7376bc7ac0b6047c37a2931f957e9c3ebd113b",
+      "bundles/tail-mask/source/README.md": "0111539c12cc3cd6b9d4f435920997692bd7ae3ef740c1105be33d4617477d86",
+      "bundles/tail-mask/source/pyproject.toml": "ddd6482314a02ff075e7465e285f872adeae1bcf3b5f903cf0e1b8de7dfde7c2",
+      "bundles/tail-mask/source/src/soup_training_probe/activation.py": "e29d16f8e18a984a4719bc3ab192ff7841c0014347495ce431bc5cebb14bd762",
+      "bundles/tail-mask/source/src/soup_training_probe/kernels.py": "26a0e8fa54b474b08997b81965eb8604cc2d598bc30fbc78bc366c5dda9343df",
+      "bundles/tail-mask/source/src/soup_training_probe/cli.py": "11e557a629cddbf5cd0a05236b10301bf8bdfe14a950a45cf90dab84bc74e63c",
+      "bundles/tail-mask/source/src/soup_training_probe/__init__.py": "35f04eb1c6cffcb77fa6c1f61614de4467861b098443ca5b1746170b73777539",
+      "bundles/tail-mask/source/src/soup_training_probe/model.py": "3e6f4445f703df5e09e9bf52e361e25de657dbb3f29112c6be55d4b3734455a2",
+      "bundles/tail-mask/source/src/soup_training_probe/errors.py": "444f33c22bdfb6c03bc88eb2b6925c8a47996fd8ff36d8bc9c7ece93a393bb13",
+      "bundles/tail-mask/source/src/soup_training_probe/kernel-contract.json": "5469f744d8d994fd213f4802250366631758e13b881d3b7fa36cac0f9712c5bb",
+      "bundles/tail-mask/source/src/soup_training_probe/checks.py": "1d60da9566fbd068efcaffccdb30be0933dc60b3fc81b7e49f4ca446472440d7",
+      "bundles/fixed/dist/soup_training_contract_lab-0.1.0-py3-none-any.whl": "fe4495b5440005ba36c06b1c8682c82979616441c3a4f5fd83e046e5e970e86f",
+      "bundles/fixed/dist/soup_training_contract_lab-0.1.0.tar.gz": "117be4df3f7e243b6ea72b7f66e63cf85250d82f86b95ff8e40fad7a62faeabc",
+      "bundles/fixed/source/README.md": "0111539c12cc3cd6b9d4f435920997692bd7ae3ef740c1105be33d4617477d86",
+      "bundles/fixed/source/pyproject.toml": "ddd6482314a02ff075e7465e285f872adeae1bcf3b5f903cf0e1b8de7dfde7c2",
+      "bundles/fixed/source/src/soup_training_probe/activation.py": "e29d16f8e18a984a4719bc3ab192ff7841c0014347495ce431bc5cebb14bd762",
+      "bundles/fixed/source/src/soup_training_probe/kernels.py": "ba4c60ab48e917312e822a9b72a8e34d215416a8c90ea7462044a5872917f2d0",
+      "bundles/fixed/source/src/soup_training_probe/cli.py": "11e557a629cddbf5cd0a05236b10301bf8bdfe14a950a45cf90dab84bc74e63c",
+      "bundles/fixed/source/src/soup_training_probe/__init__.py": "35f04eb1c6cffcb77fa6c1f61614de4467861b098443ca5b1746170b73777539",
+      "bundles/fixed/source/src/soup_training_probe/model.py": "3e6f4445f703df5e09e9bf52e361e25de657dbb3f29112c6be55d4b3734455a2",
+      "bundles/fixed/source/src/soup_training_probe/errors.py": "444f33c22bdfb6c03bc88eb2b6925c8a47996fd8ff36d8bc9c7ece93a393bb13",
+      "bundles/fixed/source/src/soup_training_probe/kernel-contract.json": "5469f744d8d994fd213f4802250366631758e13b881d3b7fa36cac0f9712c5bb",
+      "bundles/fixed/source/src/soup_training_probe/checks.py": "1d60da9566fbd068efcaffccdb30be0933dc60b3fc81b7e49f4ca446472440d7",
+      "bundles/adapter-detach/dist/soup_training_contract_lab-0.1.0-py3-none-any.whl": "c3adebe84a4d65e5355c44fd1ca07abb3d6783fdd84f30926828ad8836ea3231",
+      "bundles/adapter-detach/dist/soup_training_contract_lab-0.1.0.tar.gz": "852d7730d6b33ce33320dd443f8a6c2876764bd6261b90215281f70c3ea1cfb7",
+      "bundles/adapter-detach/source/README.md": "0111539c12cc3cd6b9d4f435920997692bd7ae3ef740c1105be33d4617477d86",
+      "bundles/adapter-detach/source/pyproject.toml": "ddd6482314a02ff075e7465e285f872adeae1bcf3b5f903cf0e1b8de7dfde7c2",
+      "bundles/adapter-detach/source/src/soup_training_probe/activation.py": "e29d16f8e18a984a4719bc3ab192ff7841c0014347495ce431bc5cebb14bd762",
+      "bundles/adapter-detach/source/src/soup_training_probe/kernels.py": "ba4c60ab48e917312e822a9b72a8e34d215416a8c90ea7462044a5872917f2d0",
+      "bundles/adapter-detach/source/src/soup_training_probe/cli.py": "11e557a629cddbf5cd0a05236b10301bf8bdfe14a950a45cf90dab84bc74e63c",
+      "bundles/adapter-detach/source/src/soup_training_probe/__init__.py": "35f04eb1c6cffcb77fa6c1f61614de4467861b098443ca5b1746170b73777539",
+      "bundles/adapter-detach/source/src/soup_training_probe/model.py": "73f2072c9f4422203cf3dcaa3abd183fdeaaf397befa6aa53347089f48fe9ff4",
+      "bundles/adapter-detach/source/src/soup_training_probe/errors.py": "444f33c22bdfb6c03bc88eb2b6925c8a47996fd8ff36d8bc9c7ece93a393bb13",
+      "bundles/adapter-detach/source/src/soup_training_probe/kernel-contract.json": "5469f744d8d994fd213f4802250366631758e13b881d3b7fa36cac0f9712c5bb",
+      "bundles/adapter-detach/source/src/soup_training_probe/checks.py": "1d60da9566fbd068efcaffccdb30be0933dc60b3fc81b7e49f4ca446472440d7"
+    }
+  },
+  "installed": [
+    {
+      "name": "filelock",
+      "version": "3.20.0"
+    },
+    {
+      "name": "fsspec",
+      "version": "2025.10.0"
+    },
+    {
+      "name": "jinja2",
+      "version": "3.1.6"
+    },
+    {
+      "name": "markupsafe",
+      "version": "3.0.4"
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0"
+    },
+    {
+      "name": "networkx",
+      "version": "3.4.2"
+    },
+    {
+      "name": "numpy",
+      "version": "2.2.6"
+    },
+    {
+      "name": "nvidia-cublas-cu12",
+      "version": "12.4.5.8"
+    },
+    {
+      "name": "nvidia-cuda-cupti-cu12",
+      "version": "12.4.127"
+    },
+    {
+      "name": "nvidia-cuda-nvrtc-cu12",
+      "version": "12.4.127"
+    },
+    {
+      "name": "nvidia-cuda-runtime-cu12",
+      "version": "12.4.127"
+    },
+    {
+      "name": "nvidia-cudnn-cu12",
+      "version": "9.1.0.70"
+    },
+    {
+      "name": "nvidia-cufft-cu12",
+      "version": "11.2.1.3"
+    },
+    {
+      "name": "nvidia-curand-cu12",
+      "version": "10.3.5.147"
+    },
+    {
+      "name": "nvidia-cusolver-cu12",
+      "version": "11.6.1.9"
+    },
+    {
+      "name": "nvidia-cusparse-cu12",
+      "version": "12.3.1.170"
+    },
+    {
+      "name": "nvidia-cusparselt-cu12",
+      "version": "0.6.2"
+    },
+    {
+      "name": "nvidia-nccl-cu12",
+      "version": "2.21.5"
+    },
+    {
+      "name": "nvidia-nvjitlink-cu12",
+      "version": "12.4.127"
+    },
+    {
+      "name": "nvidia-nvtx-cu12",
+      "version": "12.4.127"
+    },
+    {
+      "name": "setuptools",
+      "version": "80.9.0"
+    },
+    {
+      "name": "sympy",
+      "version": "1.13.1"
+    },
+    {
+      "name": "torch",
+      "version": "2.6.0+cu124"
+    },
+    {
+      "name": "triton",
+      "version": "3.2.0"
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.15.0"
+    }
+  ]
+}

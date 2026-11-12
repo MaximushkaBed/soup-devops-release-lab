@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "status": "failed",
+  "backend": "cuda",
+  "native_cuda": false,
+  "checks": [
+    {
+      "name": "forward",
+      "status": "passed",
+      "shape": [
+        3,
+        11
+      ]
+    }
+  ],
+  "python": "3.12.13",
+  "platform": "linux",
+  "package": "0.1.0",
+  "module": "/tmp/soup-cuda-work-20261112/runtime/lib/python3.12/site-packages/soup_training_probe/cli.py",
+  "torch": "2.6.0+cu124",
+  "cuda_runtime": "12.4",
+  "cuda_available": true,
+  "gpu": "NVIDIA RTX A4000",
+  "capability": [
+    8,
+    6
+  ],
+  "triton": "3.2.0",
+  "error": {
+    "code": "gradient-mismatch",
+    "message": "dX float32 n=1: Tensor-likes are not close!\n\nMismatched elements: 1 / 1 (100.0%)\nGreatest absolute difference: 6.704754196107388e-05 at index (0,) (up to 2e-05 allowed)\nGreatest relative difference: 1.1429119110107422 at index (0,) (up to 0.0002 allowed)"
+  }
+}

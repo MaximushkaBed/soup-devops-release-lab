@@ -5,3 +5,5 @@ LICENSE text eol=lf
 requirements/*.txt text eol=lf
 requirements/*.in text eol=lf
 requirements/*.json text eol=lf
+# Preserve recorded GPU evidence bytes on Windows checkouts as well.
+docs/gpu-validation/** -text -eol

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "status": "failed",
+  "backend": "cuda",
+  "native_cuda": false,
+  "checks": [],
+  "python": "3.12.13",
+  "platform": "linux",
+  "package": "0.1.0",
+  "module": "/tmp/soup-cuda-work-20261112/runtime/lib/python3.12/site-packages/soup_training_probe/cli.py",
+  "error": {
+    "code": "kernel-resource-missing",
+    "message": "Installed wheel lacks kernel-contract.json"
+  }
+}

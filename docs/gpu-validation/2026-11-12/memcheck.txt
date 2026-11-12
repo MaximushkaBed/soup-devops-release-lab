@@ -1,0 +1,109 @@
+========= COMPUTE-SANITIZER
+{
+  "schema": 1,
+  "status": "passed",
+  "backend": "cuda",
+  "native_cuda": true,
+  "checks": [
+    {
+      "name": "forward",
+      "status": "passed",
+      "shape": [
+        3,
+        11
+      ]
+    },
+    {
+      "name": "activation-forward-backward",
+      "status": "passed",
+      "cases": [
+        {
+          "dtype": "float32",
+          "elements": 0
+        },
+        {
+          "dtype": "float32",
+          "elements": 1
+        },
+        {
+          "dtype": "float32",
+          "elements": 7
+        },
+        {
+          "dtype": "float32",
+          "elements": 257
+        },
+        {
+          "dtype": "float32",
+          "elements": 1025
+        },
+        {
+          "dtype": "float16",
+          "elements": 0
+        },
+        {
+          "dtype": "float16",
+          "elements": 1
+        },
+        {
+          "dtype": "float16",
+          "elements": 7
+        },
+        {
+          "dtype": "float16",
+          "elements": 257
+        },
+        {
+          "dtype": "float16",
+          "elements": 1025
+        },
+        {
+          "dtype": "bfloat16",
+          "elements": 0
+        },
+        {
+          "dtype": "bfloat16",
+          "elements": 1
+        },
+        {
+          "dtype": "bfloat16",
+          "elements": 7
+        },
+        {
+          "dtype": "bfloat16",
+          "elements": 257
+        },
+        {
+          "dtype": "bfloat16",
+          "elements": 1025
+        }
+      ],
+      "finite_difference": false
+    },
+    {
+      "name": "lora-two-step",
+      "status": "passed",
+      "steps": 2,
+      "losses": [
+        0.06348086893558502,
+        0.06345678120851517
+      ],
+      "frozen_base": "unchanged",
+      "zero_initialized_b": true
+    }
+  ],
+  "python": "3.12.13",
+  "platform": "linux",
+  "package": "0.1.0",
+  "module": "/tmp/soup-cuda-work-20261112/runtime/lib/python3.12/site-packages/soup_training_probe/cli.py",
+  "torch": "2.6.0+cu124",
+  "cuda_runtime": "12.4",
+  "cuda_available": true,
+  "gpu": "NVIDIA RTX A4000",
+  "capability": [
+    8,
+    6
+  ],
+  "triton": "3.2.0"
+}
+========= ERROR SUMMARY: 0 errors

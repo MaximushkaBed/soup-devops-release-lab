@@ -1,0 +1,21 @@
+{
+  "source_commit": "463e000c81426b96da77455f9d9da12967957aaa",
+  "training_source_matches_current_tree": true,
+  "provider": "Brev / Paperspace",
+  "instance_type": "paperspace_A4000",
+  "gpu": "NVIDIA RTX A4000",
+  "driver": "535.54.03",
+  "python": "3.12.13",
+  "torch": "2.6.0+cu124",
+  "triton": "3.2.0",
+  "cuda_runtime": "12.4",
+  "catalog_hourly_usd": 0.96,
+  "lease_elapsed_seconds": 679.43,
+  "estimated_compute_usd": 0.1812,
+  "invoice_verified": false,
+  "instance_deleted": true,
+  "native_contract_status": "passed",
+  "memcheck": "ERROR SUMMARY: 0 errors",
+  "benchmark": "not performed",
+  "cleanup_note": "Piped y was treated as an additional instance name by Brev and produced an error. The approved instance was deleted; an empty instance list confirmed teardown. No additional instance was created."
+}

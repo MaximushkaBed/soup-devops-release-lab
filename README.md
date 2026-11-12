@@ -62,7 +62,9 @@ files are checked along with modified file contents; ignored generated output is
 or Docker is an error. `--skip-docker` explicitly produces a `partial` report, never `passed`.
 These local checks cover the current OS/Python only; the remote ten-target matrix remains required.
 The optional ML preflight requires Linux x86_64 and Python 3.11–3.13. The greeting package's
-separate artifact tester covers its other targets. Native GPU validation remains unexecuted.
+separate artifact tester covers its other targets. A one-off [native GPU validation](docs/gpu-ci.md)
+now records installed CUDA contracts, controlled failures and memcheck on one A4000 configuration.
+Recurring GPU leases and their external budget watchdog remain a design.
 
 ## Training contracts for Soup
 

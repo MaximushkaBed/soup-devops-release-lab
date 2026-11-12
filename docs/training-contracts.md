@@ -77,8 +77,9 @@ kernels and numerical contracts on CUDA and synchronizes before success. Interpr
 absent/unsupported devices fail with exit 3. CPU CI explicitly proves that missing CUDA produces
 `gpu-unavailable`, `status=failed`, `native_cuda=false`.
 
-No native GPU execution, compiled-kernel correctness, CUDA races, OOM recovery, throughput or
-memory improvement is claimed. CPU profiles cannot provision native CUDA. Before enabling a
-real GPU release gate, pin a CUDA/driver/image profile, test installed artifacts there, add
-sanitizer/failure-path checks and measure warm/cold performance on stable hardware. The
-[broker and budget controls](gpu-ci.md) remain a design; no paid GPU was rented.
+A one-off [native run](gpu-ci.md#recorded-native-run--2026-11-12) now passed wheel/sdist numerical
+contracts and memcheck on RTX A4000 / Torch 2.6.0+cu124 / Triton 3.2.0. Four controlled failures
+were also checked. This covers the independently written fixture, not Soup's production kernels.
+CPU profiles still cannot provision CUDA. CUDA races, OOM recovery, throughput and memory savings
+were not tested. Before enabling a recurring GPU release gate, pin a deployment profile and
+implement the [broker and budget controls](gpu-ci.md), which remain a design.
