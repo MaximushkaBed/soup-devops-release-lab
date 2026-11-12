@@ -76,6 +76,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Reconstruct the same demonstration source candidate as the build
         if: github.event_name == 'workflow_dispatch'
+        shell: bash
         env:
           FAULT: ${{ inputs.fault }}
         run: python tools/inject_bug.py "$FAULT"
