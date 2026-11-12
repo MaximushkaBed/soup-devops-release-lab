@@ -11,7 +11,9 @@ def replace(path: str, before: str, after: str) -> None:
     text = target.read_text(encoding="utf-8")
     if text.count(before) != 1:
         raise SystemExit(f"Expected exactly one replacement in {path}: {before!r}")
-    target.write_text(text.replace(before, after), encoding="utf-8")
+    # Build and consumer jobs must produce identical candidate bytes on Windows too.
+    with target.open("w", encoding="utf-8", newline="\n") as output:
+        output.write(text.replace(before, after))
 
 
 def main() -> None:

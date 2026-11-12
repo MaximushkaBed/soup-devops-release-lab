@@ -55,6 +55,11 @@ and configured GitHub main protection and immutable release-tag rules. Main requ
 the up-to-date `release-ready` check even for admins. Independent approval is disabled while
 there is only one maintainer; policy definitions are versioned in `.github/repository-policy/`.
 
+A further AI review supplied by the applicant identified a false source-byte rejection in the
+demonstration path. Codex reproduced it and corrected consumer candidate reconstruction and LF
+output. The original source-byte guard had been added without repeating all four demonstrations;
+the new regression and repeated Actions runs are separate from the original submission evidence.
+
 ## Applicant's independent checks
 
 The applicant personally configured the Pending Trusted Publisher on TestPyPI with the repository,
