@@ -98,7 +98,7 @@ def test_cli_failure_keeps_the_underlying_diagnostic(capsys):
     "change",
     [
         {"greeting": "Wrong"},
-        {"version": "0.9.4"},
+        {"version": "0.9.5"},
         {"user": ""},
         {"timestamp": "2026-01-01T00:00:00"},
         {"timestamp": "2026-01-01T00:00:00+01:00"},
@@ -108,7 +108,7 @@ def test_cli_failure_keeps_the_underlying_diagnostic(capsys):
 def test_broken_report_is_rejected_under_optimized_python(change):
     data = {
         "greeting": "Hello, Soup!",
-        "version": "0.9.3",
+        "version": "0.9.4",
         "user": "user",
         "timestamp": "2026-01-01T00:00:00+00:00",
         **change,

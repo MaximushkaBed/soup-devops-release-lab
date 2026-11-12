@@ -177,7 +177,7 @@ def check_docker(recorder: Recorder, bundle: Path) -> None:
                 timeout=60,
             )
             data = json.loads(output)
-            if data.get("greeting") != "Hello, Soup!" or data.get("version") != "0.9.3":
+            if data.get("greeting") != "Hello, Soup!" or data.get("version") != "0.9.4":
                 raise ValueError(f"Unexpected Docker CLI output: {data}")
         finally:
             try:

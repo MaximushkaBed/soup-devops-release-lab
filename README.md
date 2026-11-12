@@ -171,6 +171,8 @@ Fresh matrix results and all six demonstrated failures are in
 ## Releases
 
 See [TestPyPI setup](docs/testpypi.md). Baseline `v0.9.3` is already published; keep its tag unchanged.
+The current candidate is `0.9.4`, to validate publication after the pipeline and repository
+protection updates. The earlier publication and GPU validation retain their original provenance.
 For a future release, bump the version and version expectations, and use a new matching tag.
 A release must be on `main`, match package metadata, pass all gates, and publish the same immutable
 artifact that was tested. No rebuilding occurs in the publisher. Only that job receives OIDC access.

@@ -40,7 +40,7 @@ def invoke(executable: Path, *args: str, expected_code: int = 0) -> str:
 
 def validate_report(data: dict, name: str) -> None:
     require(data.get("greeting") == f"Hello, {name}!", f"Wrong greeting: {data}")
-    require(data.get("version") == "0.9.3", f"Wrong version: {data}")
+    require(data.get("version") == "0.9.4", f"Wrong version: {data}")
     require(bool(data.get("user")), f"Missing user: {data}")
     timestamp = datetime.fromisoformat(data["timestamp"])
     require(timestamp.utcoffset() == timedelta(0), f"Timestamp must be UTC: {data}")
@@ -57,8 +57,8 @@ def main() -> None:
         installed.is_relative_to(Path(sys.prefix).resolve()), f"Not installed in venv: {installed}"
     )
     require(
-        importlib.metadata.version(DIST) == soup_release_lab.__version__ == "0.9.3",
-        "Installed distribution and module versions must both be 0.9.3",
+        importlib.metadata.version(DIST) == soup_release_lab.__version__ == "0.9.4",
+        "Installed distribution and module versions must both be 0.9.4",
     )
     entrypoints = importlib.metadata.distribution(DIST).entry_points
     require(
@@ -78,7 +78,7 @@ def main() -> None:
         validate_report(json.loads(invoke(executable, "--name", name, "--json")), name)
     require(invoke(executable).strip() == "Hello, world!", "Wrong default text greeting")
     require(invoke(executable, "--name", "Soup").strip() == "Hello, Soup!", "Wrong text greeting")
-    require(invoke(executable, "--version").strip() == "0.9.3", "Wrong CLI version")
+    require(invoke(executable, "--version").strip() == "0.9.4", "Wrong CLI version")
     require("usage:" in invoke(executable, "--help"), "Missing CLI help")
     invoke(executable, "--invalid", expected_code=2)
     invoke(executable, "--name", expected_code=2)
